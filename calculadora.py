@@ -47,7 +47,12 @@ df_ano_mes["Date"] = pd.to_datetime(df["Date"]).dt.to_period("M")
 #agrupando os dividendos por mês 
 
 df_ano_mes.groupby("Date")["Dividends"]
- 
-print(df_ano_mes)
+df_ano_mes.reset_index(drop=True)
+dividendos_mes = df_ano_mes[df_ano_mes["Dividends"] > 0]
+
+
+
+
+
 
 
