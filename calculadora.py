@@ -37,10 +37,17 @@ valor_inicial = round(valor_inicial, 2)
 #organizando arquivos a partir da data escolhida
 df["Date"] = pd.to_datetime(df["Date"])
 df = df[df["Date"].dt.year >= data]
+
+#organizando dados pelo mês 
 df_ano_mes = df
 df_ano_mes["Date"] = pd.to_datetime(df["Date"]).dt.to_period("M")
 
-print(df_ano_mes)
+#organizando dividendos
 
+#agrupando os dividendos por mês 
+
+df_ano_mes.groupby("Date")["Dividends"]
+ 
+print(df_ano_mes)
 
 
