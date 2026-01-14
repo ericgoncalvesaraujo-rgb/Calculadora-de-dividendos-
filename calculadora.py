@@ -8,24 +8,32 @@ from decimal import Decimal
 hj = datetime.now().year
 #coleta de dados da ação escolhida
 
-#pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
-Ticket = str(input("Digite o código: ")).upper().strip()
-nome = yf.Ticker(f"{Ticket}.SA")
-df = nome.history(interval="1d", period="max")
+while True:
+ #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
+ Ticket = str(input("Digite o código: ")).upper().strip()
+ nome = yf.Ticker(f"{Ticket}.SA")
+ df = nome.history(interval="1d", period="max")
+ #garante que passe somente a ação correta
+ if not df.empty:
+  break
+ else:
+  print("acao incorreta ou não existente")
 
 #reseta o index para que a data se torne uma coluna
 df.reset_index(inplace = True)
- 
-#pega a informação da data do inicio dos aportes
-data = int(input("Data do começo dos aportes: "))
 
-#garante data possível 
-while data > hj:
- if data > hj:
+#pegandi as datas e garantindo serem possíveis
+while True:
+ #pega a informação da data do inicio dos aportes
+ data = int(input("Data do começo dos aportes: "))
+ #garante data possível 
+ if data <= hj:
+  
+  break
+ else:
   print("data impossível!!!")
-  data = int(input("Data do começo dos aportes: "))
 
-
+ 
 #pega o valor inicial do aporte
 valor_inicial = float(input("digite o valor do aporte: "))
 valor_inicial = round(valor_inicial, 2)
@@ -67,9 +75,10 @@ lucro = round(((df["Close"].iloc[-1] - df["Close"].iloc[0]) * quantidade) + divi
 saldo = valor_inicial % df["Close"].iloc[0]
 df_final = []
 #laço para percorrer o df inteiro e saber a evolução do patrimônio 
-for linha in df.itertuples:
+for linha in df.itertuples():
  acao_dividendo = ((linha.Dividends * quantidade) + saldo) //  linha.Close
  saldo = ((linha.Dividends * quantidade) + saldo) % linha.Close
+ quantidade_divi = quantidade 
  quantidade += acao_dividendo
  patrimonio = quantidade * linha.Close
 
@@ -78,14 +87,15 @@ for linha in df.itertuples:
    "Saldo" : saldo,
    "valor no fechamento" : linha.Close,
    "ações compradas" : acao_dividendo,
-   "Dividendos" : linha.Dividends * quantidade,
+   "Dividendos" : linha.Dividends * quantidade_divi,
    "total de ações" : quantidade,
    "patrimônio" : patrimonio
  })
 df_final = pd.DataFrame(df_final)
-print(df_final)
 
+fig = px.line_3d(df_final, x= df["Date"])
 
+fig.show()
 
 
 
