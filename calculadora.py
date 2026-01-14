@@ -67,18 +67,18 @@ lucro = round(((df["Close"].iloc[-1] - df["Close"].iloc[0]) * quantidade) + divi
 saldo = valor_inicial % df["Close"].iloc[0]
 df_final = []
 #laço para percorrer o df inteiro e saber a evolução do patrimônio 
-for linha in df:
- acao_dividendo = ((df.loc[linha, "Dividends"] * quantidade) + saldo) //  df.loc[linha, "Close"]
- saldo = ((df.loc[linha, "Dividends"] * quantidade) + saldo) % df.loc[linha, "Close"]
+for linha in df.itertuples:
+ acao_dividendo = ((df.Dividends * quantidade) + saldo) //  df.Close
+ saldo = ((df.Dividends * quantidade) + saldo) % df.Close
  quantidade += acao_dividendo
- patrimonio = quantidade * df.iloc[linha, "Close"]
+ patrimonio = quantidade * df.Close
 
  df_final.append({
-   "Data" : df.loc[linha, "date"],
+   "Data" : df.Date,
    "Saldo" : saldo,
-   "valor no fechamento" : df.loc[linha, "Close"],
+   "valor no fechamento" : df.Close,
    "ações compradas" : acao_dividendo,
-   "Dividendos" : df.loc[linha, "Dividends"] * quantidade,
+   "Dividendos" : df.Dividends * quantidade,
    "total de ações" : quantidade,
    "patrimônio" : patrimonio
  })
