@@ -94,7 +94,8 @@ for linha in df_ano_mes.itertuples():
    "patrimônio" : patrimonio
  })
 df_final = pd.DataFrame(df_final)
-
+df_final["Data"] = df_final["Data"].dt.to_timestamp()
+print("Essa é a tabela e gráfico da sua evolução patrimonial)
 print(df_final)
 fig = px.line(df_final, x = "Data", y = "patrimônio")
 fig.show()
