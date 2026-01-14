@@ -47,14 +47,16 @@ df["Date"] = pd.to_datetime(df["Date"])
 df = df[df["Date"].dt.year >= data]
 
 #organizando dados pelo mês 
-df_ano_mes = df
+df_ano_mes = df.copy()
 df_ano_mes["Date"] = pd.to_datetime(df["Date"]).dt.to_period("M")
 
 #organizando dividendos
 
 #agrupando os dividendos por mês 
 
-df_ano_mes["Dividends"] = df_ano_mes.groupby("Date")["Dividends"].sum()
+df_ano_mes = df_ano_mes.groupby("Date").agg({
+ "Dividends" : "sum", "Close" : "last"
+})
 df_ano_mes.reset_index(drop=True, inplace=True)
 dividendos_mes = df_ano_mes[df_ano_mes["Dividends"] > 0]
 #soma os dividendos que foram recebidos
@@ -94,7 +96,7 @@ for linha in df_ano_mes.itertuples():
 df_final = pd.DataFrame(df_final)
 
 print(df_final)
-fig = px.line_3d(df_final, x="Date")
+fig = px.line(df_final, x="Date", y="patrimonio")
 
 fig.show()
 
