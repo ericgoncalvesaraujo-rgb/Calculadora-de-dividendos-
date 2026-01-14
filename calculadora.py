@@ -28,7 +28,7 @@ while True:
  data = int(input("Data do começo dos aportes: "))
  #garante data possível 
  if data <= hj:
-  
+
   break
  else:
   print("data impossível!!!")
@@ -54,8 +54,8 @@ df_ano_mes["Date"] = pd.to_datetime(df["Date"]).dt.to_period("M")
 
 #agrupando os dividendos por mês 
 
-df_ano_mes.groupby("Date")["Dividends"]
-df_ano_mes.reset_index(drop=True)
+df_ano_mes["Dividends"] = df_ano_mes.groupby("Date")["Dividends"].sum()
+df_ano_mes.reset_index(drop=True, inplace=True)
 dividendos_mes = df_ano_mes[df_ano_mes["Dividends"] > 0]
 #soma os dividendos que foram recebidos
 dividendos_somados = dividendos_mes["Dividends"].sum()
@@ -63,7 +63,7 @@ dividendos_somados = dividendos_mes["Dividends"].sum()
 #organizando algumas variaveis para saber a rentabilidade 
 
 #calcula o numero exato de acoes que pode ser comprado com o valor inicial 
-quantidade = valor_inicial // df["Close"].iloc[0]
+quantidade = int(valor_inicial // df["Close"].iloc[0])
 
 #calcula quanto que rende sem os dividendos sendo reenvestidos, mas considerando-os na soma
 lucro = round(((df["Close"].iloc[-1] - df["Close"].iloc[0]) * quantidade) + dividendos_somados, 2)
@@ -75,10 +75,10 @@ lucro = round(((df["Close"].iloc[-1] - df["Close"].iloc[0]) * quantidade) + divi
 saldo = valor_inicial % df["Close"].iloc[0]
 df_final = []
 #laço para percorrer o df inteiro e saber a evolução do patrimônio 
-for linha in df.itertuples():
- acao_dividendo = ((linha.Dividends * quantidade) + saldo) //  linha.Close
+for linha in df_ano_mes.itertuples():
+ acao_dividendo = int(((linha.Dividends * quantidade) + saldo) //  linha.Close)
  saldo = ((linha.Dividends * quantidade) + saldo) % linha.Close
- quantidade_divi = quantidade 
+ quantidade_divi = quantidade
  quantidade += acao_dividendo
  patrimonio = quantidade * linha.Close
 
@@ -93,7 +93,8 @@ for linha in df.itertuples():
  })
 df_final = pd.DataFrame(df_final)
 
-fig = px.line_3d(df_final, x= df["Date"])
+print(df_final)
+fig = px.line_3d(df_final, x="Date")
 
 fig.show()
 
