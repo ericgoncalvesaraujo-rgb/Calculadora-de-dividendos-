@@ -3,7 +3,6 @@ import pandas as pd
 import plotly.express as px
 import yfinance as yf
 from datetime import datetime
-from decimal import Decimal
 
 hj = datetime.now().year
 #coleta de dados da ação escolhida
@@ -95,7 +94,7 @@ for linha in df_ano_mes.itertuples():
  })
 df_final = pd.DataFrame(df_final)
 df_final["Data"] = df_final["Data"].dt.to_timestamp()
-print("Essa é a tabela e gráfico da sua evolução patrimonial)
+print("Essa é a tabela e gráfico da sua evolução patrimonial")
 print(df_final)
 fig = px.line(df_final, x = "Data", y = "patrimônio")
 fig.show()
