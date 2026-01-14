@@ -96,6 +96,8 @@ for linha in df_ano_mes.itertuples():
 df_final = pd.DataFrame(df_final)
 
 print(df_final)
+
+
 fig.show()
 
 
