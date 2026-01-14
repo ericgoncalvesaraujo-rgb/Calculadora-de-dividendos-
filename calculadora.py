@@ -1,6 +1,6 @@
 #importar bibliotecas
 import pandas as pd
-import matplotlib as plt
+import plotly.express as px
 import yfinance as yf
 from datetime import datetime
 from decimal import Decimal
@@ -49,6 +49,43 @@ df_ano_mes["Date"] = pd.to_datetime(df["Date"]).dt.to_period("M")
 df_ano_mes.groupby("Date")["Dividends"]
 df_ano_mes.reset_index(drop=True)
 dividendos_mes = df_ano_mes[df_ano_mes["Dividends"] > 0]
+#soma os dividendos que foram recebidos
+dividendos_somados = dividendos_mes["Dividends"].sum()
+
+#organizando algumas variaveis para saber a rentabilidade 
+
+#calcula o numero exato de acoes que pode ser comprado com o valor inicial 
+quantidade = valor_inicial // df["Close"].iloc[0]
+
+#calcula quanto que rende sem os dividendos sendo reenvestidos, mas considerando-os na soma
+lucro = round(((df["Close"].iloc[-1] - df["Close"].iloc[0]) * quantidade) + dividendos_somados, 2)
+
+
+#criando o df final
+
+#variaveis auxiliares
+saldo = valor_inicial % df["Close"].iloc[0]
+df_final = []
+#laço para percorrer o df inteiro e saber a evolução do patrimônio 
+for linha in df_ano_mes.index():
+ acao_dividendo = ((df.loc[linha, "Dividends"] * quantidade) + saldo) //  df.loc[linha, "Close"]
+ saldo = ((df.loc[linha, "Dividends"] * quantidade) + saldo) % df.loc[linha, "Close"]
+ quantidade += acao_dividendo
+ patrimonio = quantidade * df.iloc[linha, "Close"]
+
+ df_final = {
+   "Data" : df.loc[linha, "date"],
+   "Saldo" : saldo,
+   "valor no fechamento" : df.loc[linha, "Close"],
+   "ações compradas" : acao_dividendo
+   "Dividendos" : df.loc[linha, "Dividends"] * quantidade,
+   "total de ações" : quantidade,
+   "patrimônio" : patrimonio
+ }
+
+  
+
+
 
 
 
