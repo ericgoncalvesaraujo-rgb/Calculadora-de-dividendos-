@@ -34,12 +34,15 @@ while True:
 
  
 #pega o valor inicial do aporte
-valor_inicial = float(input("digite o valor do aporte: "))
-valor_inicial = round(valor_inicial, 2)
-
-
-
+while True:
+ valor_inicial = float(input("digite o valor do aporte: "))
+ valor_inicial = round(valor_inicial, 2)
+ if valor_inicial > df["Close"].iloc[0]:
+  break
+ else:
+  print("Seu aporte é insuficiente para comprar a ação nesse ano")
 #organização de dados
+
 
 #organizando arquivos a partir da data escolhida
 df["Date"] = pd.to_datetime(df["Date"])
@@ -92,9 +95,14 @@ for linha in df_ano_mes.itertuples():
    "total de ações" : quantidade,
    "patrimônio" : patrimonio
  })
+ #transformando o df_final em DataFrame e vomtando ao tempo normal
 df_final = pd.DataFrame(df_final)
 df_final["Data"] = df_final["Data"].dt.to_timestamp()
-print("Essa é a tabela e gráfico da sua evolução patrimonial")
+
+print(f"seu patrimônio seria R$:{lucro} se não tivesse investido os dividendos\n")
+print("Se tivesse investido vamos te mostrar a mudança\n\n")
+
+print("Essa é a tabela e gráfico da sua evolução patrimonial investimento os dividendos")
 print(df_final)
 fig = px.line(df_final, x = "Data", y = "patrimônio")
 fig.show()
