@@ -102,8 +102,9 @@ df_final["Data"] = df_final["Data"].dt.to_timestamp()
 print(f"seu patrimônio seria R$:{lucro} se não tivesse investido os dividendos\n")
 print("Se tivesse investido vamos te mostrar a mudança\n\n")
 
-print("Essa é a tabela e gráfico da sua evolução patrimonial investimento os dividendos")
-print(df_final)
+print("Essa é a tabela e gráfico da sua evolução patrimonial investindo os dividendos")
+print(df_final, "\n\n")
+print("Aqui está o gráfico da sua evolução patrimônial investimento os dividendos\n")
 fig = px.line(df_final, x = "Data", y = "patrimônio")
 fig.show()
 
