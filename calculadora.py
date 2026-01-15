@@ -70,7 +70,7 @@ dividendos_somados = dividendos_mes["Dividends"].sum()
 quantidade = int(valor_inicial // df["Close"].iloc[0])
 
 #calcula quanto que rende sem os dividendos sendo reenvestidos, mas considerando-os na soma
-lucro = round(((df["Close"].iloc[-1] - df["Close"].iloc[0]) * quantidade) + dividendos_somados, 2)
+lucro_sem_reenvestir = round(((df["Close"].iloc[-1] - df["Close"].iloc[0]) * quantidade) + dividendos_somados, 2)
 
 
 #criando o df final
@@ -93,19 +93,25 @@ for linha in df_ano_mes.itertuples():
    "ações compradas" : acao_dividendo,
    "Dividendos" : linha.Dividends * quantidade_divi,
    "total de ações" : quantidade,
-   "patrimônio" : patrimonio
+   "Patrimonio" : patrimonio
  })
  #transformando o df_final em DataFrame e vomtando ao tempo normal
 df_final = pd.DataFrame(df_final)
 df_final["Data"] = df_final["Data"].dt.to_timestamp()
 
-print(f"seu patrimônio seria R$:{lucro} se não tivesse investido os dividendos\n")
+#porcentagem de lucro desse investimento 
+valor_final = round(df_final["Patrimonio"].iloc[-1], 2)
+porcentagem_sem_reenvestir = round((lucro_sem_reenvestir - valor_inicial) / 100, 2)
+porcentagem_reenvestindo = round((valor_final - valor_inicial) / 100, 2)
+
+#mostrar os resultados 
+print(f"seu patrimônio seria R$:{lucro_sem_reenvestir} se não tivesse reenvestido os dividendos com lucro de {porcentagem_sem_reenvestir}% e\nR$:{valor_final} seria seu patrimônio se tivesse reenvestido,\num lucro de {porcentagem_reenvestindo}%")
 print("Se tivesse investido vamos te mostrar a mudança\n\n")
 
-print("Essa é a tabela e gráfico da sua evolução patrimonial investindo os dividendos")
+print("Essa é a tabela da sua evolução patrimonial investindo os dividendos\n")
 print(df_final, "\n\n")
 print("Aqui está o gráfico da sua evolução patrimônial investimento os dividendos\n")
-fig = px.line(df_final, x = "Data", y = "patrimônio")
+fig = px.line(df_final, x = "Data", y = "Patrimonio")
 fig.show()
 
 
