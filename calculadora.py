@@ -41,6 +41,16 @@ while True:
   break
  else:
   print("Seu aporte é insuficiente para comprar a ação nesse ano")
+
+#pegar valor do aporte mensal e quantos meses serão
+
+while True:
+  aporte_mensal = float(input("digite o valor do aporte mensal!!")).round(2)
+  if aporte_mensal > 0
+   meses_aporte = int(input("durante quantos meses serão?"))
+  else 
+   break
+   
 #organização de dados
 
 
