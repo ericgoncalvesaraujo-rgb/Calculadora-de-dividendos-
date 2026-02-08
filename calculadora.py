@@ -87,10 +87,11 @@ lucro_sem_reenvestir = round(((df["Close"].iloc[-1] - df["Close"].iloc[0]) * qua
 #criando o df final
 
 #variaveis auxiliares
-saldo = (valor_inicial % df["Close"].iloc[0])+ aporte_mensal
+saldo = (valor_inicial % df["Close"].iloc[0])
 df_final = []
 #laço para percorrer o df inteiro e saber a evolução do patrimônio 
 for linha in df_ano_mes.itertuples():
+ saldo += aporte_mensal
  acao_dividendo = int(((linha.Dividends * quantidade)+ saldo) //  linha.Close)
  saldo = ((linha.Dividends * quantidade) + saldo) % linha.Close
  quantidade_divi = quantidade
@@ -115,8 +116,8 @@ df_final["Data"] = df_final["Data"].dt.to_timestamp()
 
 #porcentagem de lucro desse investimento 
 valor_final = round(df_final["Patrimonio"].iloc[-1], 2)
-porcentagem_sem_reenvestir = round((lucro_sem_reenvestir - valor_inicial) / 100, 2)
-porcentagem_reenvestindo = round((valor_final - valor_inicial) / 100, 2)
+porcentagem_sem_reenvestir = round(((lucro_sem_reenvestir - valor_inicial)/valor_inicial)* 100, 2)
+porcentagem_reenvestindo = round(((valor_final - valor_inicial)/ valor_inicial) * 100, 2)
 
 #mostrar os resultados 
 print(f"seu patrimônio seria R$:{lucro_sem_reenvestir} se não tivesse reenvestido os dividendos com lucro de {porcentagem_sem_reenvestir}% e\nR$:{valor_final} seria seu patrimônio se tivesse reenvestido,\num lucro de {porcentagem_reenvestindo}%")
