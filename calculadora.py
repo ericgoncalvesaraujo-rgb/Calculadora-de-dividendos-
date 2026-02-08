@@ -45,12 +45,13 @@ while True:
 #pegar valor do aporte mensal e quantos meses serão
 
 while True:
-  aporte_mensal = float(input("digite o valor do aporte mensal!!")).round(2)
+  aporte_mensal = float(input("digite o valor do aporte mensal:"))
+  aporte_mensal = round(aporte_mensal, 2)
   if aporte_mensal > 0:
-   meses_aporte = int(input("durante quantos meses serão?"))
-  else 
    break
-   
+  else:
+   print("Não tera aportes mensais")
+   break
 #organização de dados
 
 
@@ -86,11 +87,11 @@ lucro_sem_reenvestir = round(((df["Close"].iloc[-1] - df["Close"].iloc[0]) * qua
 #criando o df final
 
 #variaveis auxiliares
-saldo = valor_inicial % df["Close"].iloc[0]
+saldo = (valor_inicial % df["Close"].iloc[0])+ aporte_mensal
 df_final = []
 #laço para percorrer o df inteiro e saber a evolução do patrimônio 
 for linha in df_ano_mes.itertuples():
- acao_dividendo = int(((linha.Dividends * quantidade) + saldo) //  linha.Close)
+ acao_dividendo = int(((linha.Dividends * quantidade)+ saldo) //  linha.Close)
  saldo = ((linha.Dividends * quantidade) + saldo) % linha.Close
  quantidade_divi = quantidade
  quantidade += acao_dividendo
@@ -105,7 +106,10 @@ for linha in df_ano_mes.itertuples():
    "total de ações" : quantidade,
    "Patrimonio" : patrimonio
  })
- #transformando o df_final em DataFrame e vomtando ao tempo normal
+
+
+
+#transformando o df_final em DataFrame e vomtando ao tempo normal
 df_final = pd.DataFrame(df_final)
 df_final["Data"] = df_final["Data"].dt.to_timestamp()
 
