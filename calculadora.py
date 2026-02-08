@@ -46,7 +46,7 @@ while True:
 
 while True:
   aporte_mensal = float(input("digite o valor do aporte mensal!!")).round(2)
-  if aporte_mensal > 0
+  if aporte_mensal > 0:
    meses_aporte = int(input("durante quantos meses serão?"))
   else 
    break
