@@ -44,14 +44,10 @@ while True:
 
 #pegar valor do aporte mensal e quantos meses serão
 
-while True:
-  aporte_mensal = float(input("digite o valor do aporte mensal:"))
-  aporte_mensal = round(aporte_mensal, 2)
-  if aporte_mensal > 0:
-   break
-  else:
-   print("Não tera aportes mensais")
-   break
+aporte_mensal = float(input("digite o valor do aporte mensal:"))
+aporte_mensal = round(aporte_mensal, 2)
+if aporte_mensal == 0:
+  print("Não tera aportes mensais")
 #organização de dados
 
 
@@ -81,7 +77,7 @@ dividendos_somados = dividendos_mes["Dividends"].sum()
 quantidade = int(valor_inicial // df["Close"].iloc[0])
 
 #calcula quanto que rende sem os dividendos sendo reenvestidos, mas considerando-os na soma
-lucro_sem_reenvestir = round(((df["Close"].iloc[-1] - df["Close"].iloc[0]) * quantidade) + dividendos_somados, 2)
+lucro_sem_reenvestir = round((df["Close"].iloc[-1] - valor_inicial) + dividendos_somados, 2)
 
 
 #criando o df final
