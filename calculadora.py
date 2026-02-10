@@ -74,11 +74,11 @@ dividendos_somados = dividendos_mes["Dividends"].sum()
 #organizando algumas variaveis para saber a rentabilidade 
 
 #calcula o numero exato de acoes que pode ser comprado com o valor inicial 
-quantidade = int(valor_inicial // df["Close"].iloc[0])
+quantidade = int(valor_inicial // df_ano_mes["Close"].iloc[0])
 
 #calcula quanto que rende sem os dividendos sendo reenvestidos, mas considerando-os na soma
-lucro_sem_reenvestir = round((df["Close"].iloc[-1] - valor_inicial) + dividendos_somados, 2)
-
+valor_sem_reenvestir = round((df["Close"].iloc[-1] * quantidade) + dividendos_somados, 2)
+lucro_sem_reenvestir = valor_sem_reenvestir - valor_inicial
 
 #criando o df final
 
@@ -87,7 +87,8 @@ saldo = (valor_inicial % df["Close"].iloc[0])
 df_final = []
 #laço para percorrer o df inteiro e saber a evolução do patrimônio 
 for linha in df_ano_mes.itertuples():
- saldo += aporte_mensal
+ if saldo > 0:
+  saldo += aporte_mensal
  acao_dividendo = int(((linha.Dividends * quantidade)+ saldo) //  linha.Close)
  saldo = ((linha.Dividends * quantidade) + saldo) % linha.Close
  quantidade_divi = quantidade
