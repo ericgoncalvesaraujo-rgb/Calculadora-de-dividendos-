@@ -115,7 +115,7 @@ df_final["Data"] = df_final["Data"].dt.to_timestamp()
 #porcentagem de lucro desse investimento 
 valor_final = round(df_final["Patrimonio"].iloc[-1], 2)
 lucro_sem_reenvestir = valor_final - (aporte_somado + valor_inicial)
-porcentagem_sem_reenvestir = round((lucro_sem_reenvestir / valor_final )* 100, 2)
+porcentagem_sem_reenvestir = round((lucro_sem_reenvestir / (valor_inicial + aporte_somado))* 100, 2)
 porcentagem_reenvestindo = round(((valor_final - valor_inicial)/ valor_inicial) * 100, 2)
 
 #mostrar os resultados 
