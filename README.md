@@ -1,12 +1,12 @@
 ## 📊 Calculadora de Dividendos com Reinvestimento Automático
 Simulador de investimento em ações brasileiras com reinvestimento automático de dividendos, utilizando dados históricos reais do Yahoo Finance.
 Este projeto realiza um backtest completo considerando:
-. Compra inicial de ações
-. Aportes mensais
-. Recebimento de dividendos
-. Reinvestimento automático
-. Evolução patrimonial mês a mês
-.a Comparação com estratégia sem reinvestimento
+#. Compra inicial de ações
+#. Aportes mensais
+#. Recebimento de dividendos
+#. Reinvestimento automático
+#. Evolução patrimonial mês a mês
+#. Comparação com estratégia sem reinvestimento
 # Objetivo do Projeto
 Demonstrar habilidades em:
 Manipulação avançada de dados com Pandas
@@ -18,11 +18,11 @@ Visualização interativa com Plotly
 Estruturação lógica e validação de entradas
 O projeto foi desenvolvido com foco em aprendizado prático de análise de dados aplicada ao mercado financeiro.
 # Tecnologias Utilizadas
-Python 3.12
-Pandas
-YFinance
-Plotly
-Datetime
+# Python 3.12
+# Pandas
+# YFinance
+# Plotly
+# Datetime
 # Funcionalidades
 🔹 1. Coleta de Dados
 Busca automática de dados históricos de ações brasileiras via Yahoo Finance.
