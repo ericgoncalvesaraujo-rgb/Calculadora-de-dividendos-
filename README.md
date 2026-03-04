@@ -144,7 +144,10 @@ Instale as dependências:
 
 ```bash
 pip install pandas plotly yfinance
+```
+ Mande o comando após a instalação:
 
+ ```bash
 python calculadora.py
 ```
 
