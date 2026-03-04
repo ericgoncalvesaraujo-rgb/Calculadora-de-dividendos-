@@ -87,8 +87,7 @@ saldo = (valor_inicial % df["Close"].iloc[0])
 df_final = []
 #laço para percorrer o df inteiro e saber a evolução do patrimônio 
 for linha in df_ano_mes.itertuples():
- if saldo > 0:
-  saldo += aporte_mensal
+ saldo += aporte_mensal
  acao_dividendo = int(((linha.Dividends * quantidade)+ saldo) //  linha.Close)
  saldo = ((linha.Dividends * quantidade) + saldo) % linha.Close
  quantidade_divi = quantidade
