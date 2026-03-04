@@ -78,7 +78,7 @@ quantidade = int(valor_inicial // df_ano_mes["Close"].iloc[0])
 
 #calcula quanto que rende sem os dividendos sendo reenvestidos, mas considerando-os na soma
 valor_sem_reenvestir = round((df["Close"].iloc[-1] * quantidade) + dividendos_somados, 2)
-lucro_sem_reenvestir = valor_sem_reenvestir - valor_inicial
+
 
 #criando o df final
 
@@ -90,6 +90,7 @@ for linha in df_ano_mes.itertuples():
  saldo += aporte_mensal
  acao_dividendo = int(((linha.Dividends * quantidade)+ saldo) //  linha.Close)
  saldo = ((linha.Dividends * quantidade) + saldo) % linha.Close
+ aporte_somado += aporte_mensal
  quantidade_divi = quantidade
  quantidade += acao_dividendo
  patrimonio = quantidade * linha.Close
@@ -112,7 +113,8 @@ df_final["Data"] = df_final["Data"].dt.to_timestamp()
 
 #porcentagem de lucro desse investimento 
 valor_final = round(df_final["Patrimonio"].iloc[-1], 2)
-porcentagem_sem_reenvestir = round(((lucro_sem_reenvestir - valor_inicial)/valor_inicial)* 100, 2)
+lucro_sem_reenvestir = valor_final - (aporte_somado + valor_inicial)
+porcentagem_sem_reenvestir = round(((lucro_sem_reenvestir / valor_inicial) + aporte_somado)* 100, 2)
 porcentagem_reenvestindo = round(((valor_final - valor_inicial)/ valor_inicial) * 100, 2)
 
 #mostrar os resultados 
