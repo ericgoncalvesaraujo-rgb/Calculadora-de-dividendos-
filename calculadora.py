@@ -76,9 +76,6 @@ dividendos_somados = dividendos_mes["Dividends"].sum()
 #calcula o numero exato de acoes que pode ser comprado com o valor inicial 
 quantidade = int(valor_inicial // df_ano_mes["Close"].iloc[0])
 
-#calcula quanto que rende sem os dividendos sendo reenvestidos, mas considerando-os na soma
-valor_sem_reenvestir = round((df["Close"].iloc[-1] * quantidade) + dividendos_somados, 2)
-
 
 #criando o df final
 
@@ -112,9 +109,13 @@ for linha in df_ano_mes.itertuples():
 df_final = pd.DataFrame(df_final)
 df_final["Data"] = df_final["Data"].dt.to_timestamp()
 
-#porcentagem de lucro desse investimento 
+#valores 
 valor_final = round(df_final["Patrimonio"].iloc[-1], 2)
+valor_sem_reenvestir = round((df["Close"].iloc[-1] * quantidade) + dividendos_somados, 2)
 lucro_sem_reenvestir = valor_final - (aporte_somado + valor_inicial)
+
+
+#porcentagem de lucro desse investimento 
 porcentagem_sem_reenvestir = round((lucro_sem_reenvestir / (valor_inicial + aporte_somado))* 100, 2)
 porcentagem_reenvestindo = round(((valor_final - valor_inicial)/ valor_inicial) * 100, 2)
 
