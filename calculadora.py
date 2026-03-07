@@ -113,7 +113,7 @@ df_final["Data"] = df_final["Data"].dt.to_timestamp()
 gastos = valor_inicial + aporte_somado
 valor_final = round(df_final["Patrimonio"].iloc[-1], 2)
 valor_sem_reenvestir = round((df["Close"].iloc[-1] * quantidade) + dividendos_somados, 2)
-lucro_sem_reenvestir = valor_final - (aporte_somado + gastos)
+lucro_sem_reenvestir = valor_final - gastos
 
 
 #porcentagem de lucro desse investimento 
