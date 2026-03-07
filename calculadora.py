@@ -21,7 +21,7 @@ while True:
 #reseta o index para que a data se torne uma coluna
 df.reset_index(inplace = True)
 
-#pegandi as datas e garantindo serem possíveis
+#pegando as datas e garantindo serem possíveis
 while True:
  #pega a informação da data do inicio dos aportes
  data = int(input("Data do começo dos aportes: "))
@@ -68,12 +68,10 @@ df_ano_mes = df_ano_mes.groupby("Date").agg({
 })
 df_ano_mes.reset_index(inplace=True)
 dividendos_mes = df_ano_mes[df_ano_mes["Dividends"] > 0]
-#soma os dividendos que foram recebidos
-dividendos_somados = dividendos_mes["Dividends"].sum()
 
 #organizando algumas variaveis para saber a rentabilidade 
 
-#calcula o numero exato de acoes que pode ser comprado com o valor inicial 
+#calcula o numero exato de acoes que podem ser compradas com o valor inicial 
 quantidade = int(valor_inicial // df_ano_mes["Close"].iloc[0])
 
 
@@ -86,7 +84,8 @@ df_final = []
 #laço para percorrer o df inteiro e saber a evolução do patrimônio 
 for linha in df_ano_mes.itertuples():
  saldo += aporte_mensal
- acao_dividendo = int(((linha.Dividends * quantidade)+ saldo) //  linha.Close)
+ dividendos_somados += linha.Dividends * quantidade
+ acao_dividendo = int((linha.Dividends * quantidade + saldo) //  linha.Close)
  saldo = ((linha.Dividends * quantidade) + saldo) % linha.Close
  aporte_somado += aporte_mensal
  quantidade_divi = quantidade
@@ -105,7 +104,7 @@ for linha in df_ano_mes.itertuples():
 
 
 
-#transformando o df_final em DataFrame e vomtando ao tempo normal
+#transformando o df_final em DataFrame e voltando ao tempo normal
 df_final = pd.DataFrame(df_final)
 df_final["Data"] = df_final["Data"].dt.to_timestamp()
 
