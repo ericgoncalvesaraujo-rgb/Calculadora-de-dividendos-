@@ -110,14 +110,15 @@ df_final = pd.DataFrame(df_final)
 df_final["Data"] = df_final["Data"].dt.to_timestamp()
 
 #valores 
+gastos = valor_inicial + aporte_somado
 valor_final = round(df_final["Patrimonio"].iloc[-1], 2)
 valor_sem_reenvestir = round((df["Close"].iloc[-1] * quantidade) + dividendos_somados, 2)
-lucro_sem_reenvestir = valor_final - (aporte_somado + valor_inicial)
+lucro_sem_reenvestir = valor_final - (aporte_somado + gastos)
 
 
 #porcentagem de lucro desse investimento 
-porcentagem_sem_reenvestir = round((lucro_sem_reenvestir / (valor_inicial + aporte_somado))* 100, 2)
-porcentagem_reenvestindo = round(((valor_final - valor_inicial)/ valor_inicial) * 100, 2)
+porcentagem_sem_reenvestir = round((lucro_sem_reenvestir / gastos)* 100, 2)
+porcentagem_reenvestindo = round(((valor_final - gastos)/ gastos) * 100, 2)
 
 #mostrar os resultados 
 print(f"seu patrimônio seria R$:{lucro_sem_reenvestir} se não tivesse reenvestido os dividendos com lucro de {porcentagem_sem_reenvestir}% e\nR$:{valor_final} seria seu patrimônio se tivesse reenvestido,\num lucro de {porcentagem_reenvestindo}%")
