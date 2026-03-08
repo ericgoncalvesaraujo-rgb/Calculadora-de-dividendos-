@@ -42,7 +42,7 @@ while True:
  else:
   print("Seu aporte é insuficiente para comprar a ação nesse ano")
 
-#pegar valor do aporte mensal e quantos meses serão
+#pegar valor do aporte mensal
 
 aporte_mensal = float(input("digite o valor do aporte mensal:"))
 aporte_mensal = round(aporte_mensal, 2)
@@ -73,7 +73,7 @@ dividendos_mes = df_ano_mes[df_ano_mes["Dividends"] > 0]
 
 #calcula o numero exato de acoes que podem ser compradas com o valor inicial 
 quantidade = int(valor_inicial // df_ano_mes["Close"].iloc[0])
-
+quantidade_sem_divi = int(valor_inicial // df_ano_mes["Close"].iloc[0])
 
 #criando o df final
 
@@ -81,26 +81,37 @@ quantidade = int(valor_inicial // df_ano_mes["Close"].iloc[0])
 saldo = (valor_inicial % df["Close"].iloc[0])
 aporte_somado = 0
 dividendos_somados = 0
+saldo_sem_divi = (valor_inicial % df["Close"].iloc[0])
 df_final = []
 #laço para percorrer o df inteiro e saber a evolução do patrimônio 
 for linha in df_ano_mes.itertuples():
- saldo += aporte_mensal
- dividendos_somados += linha.Dividends * quantidade
+ dividendos_somados += linha.Dividends * quantidade_sem_divi
+ acao_sem_divi = int(saldo_sem_divi // linha.Close)
  acao_dividendo = int((linha.Dividends * quantidade + saldo) //  linha.Close)
  saldo = ((linha.Dividends * quantidade) + saldo) % linha.Close
+ saldo_sem_divi = saldo_sem_divi % linha.Close
+ saldo += aporte_mensal
+ saldo_sem_divi += aporte_mensal
  aporte_somado += aporte_mensal
+ quantidade_sem_divi += acao_sem_divi
  quantidade_divi = quantidade
  quantidade += acao_dividendo
- patrimonio = quantidade * linha.Close
+ patrimonio = round(quantidade * linha.Close, 2)
+ patrimonio_sem_divi = round(quantidade_sem_divi * linha.Close, 2)
 
  df_final.append({
    "Data" : linha.Date,
    "Saldo" : saldo,
+   "Saldo_sem_reinvestir" : saldo_sem_divi,
    "valor no fechamento" : linha.Close,
    "ações compradas" : acao_dividendo,
+   "ações compradas sem reinvestir" : acao_sem_divi,
    "Dividendos" : linha.Dividends * quantidade_divi,
+   "Dividendos sem reinvestir" : linha.Dividends * quantidade_sem_divi,
    "total de ações" : quantidade,
-   "Patrimonio" : patrimonio
+   "total de ações sem reinvestir" : quantidade_sem_divi,
+   "Patrimonio" : patrimonio,
+   "Patrimonio sem reinvestir" : patrimonio_sem_divi
  })
 
 
@@ -112,9 +123,8 @@ df_final["Data"] = df_final["Data"].dt.to_timestamp()
 #valores 
 gastos = valor_inicial + aporte_somado
 valor_final = round(df_final["Patrimonio"].iloc[-1], 2)
-valor_sem_reenvestir = round((df["Close"].iloc[-1] * quantidade) + dividendos_somados, 2)
-lucro_sem_reenvestir = valor_final - gastos
-
+valor_final_sem_divi = round(df_final["Patrimonio sem reinvestir"].iloc[-1] + dividendos_somados, 2)
+lucro_sem_reenvestir = valor_final_sem_divi - gastos
 
 #porcentagem de lucro desse investimento 
 porcentagem_sem_reenvestir = round((lucro_sem_reenvestir / gastos)* 100, 2)
@@ -124,7 +134,7 @@ porcentagem_reenvestindo = round(((valor_final - gastos)/ gastos) * 100, 2)
 print(f"seu patrimônio seria R$:{lucro_sem_reenvestir} se não tivesse reenvestido os dividendos com lucro de {porcentagem_sem_reenvestir}% e\nR$:{valor_final} seria seu patrimônio se tivesse reenvestido,\num lucro de {porcentagem_reenvestindo}%")
 print("Se tivesse investido vamos te mostrar a mudança\n\n")
 
-print("Essa é a tabela da sua evolução patrimonial investindo os dividendos\n")
+print("Essa é a tabela da sua evolução patrimonial\n")
 print(df_final, "\n\n")
 print("Aqui está o gráfico da sua evolução patrimônial investimento os dividendos\n")
 fig = px.line(df_final, x = "Data", y = "Patrimonio")
