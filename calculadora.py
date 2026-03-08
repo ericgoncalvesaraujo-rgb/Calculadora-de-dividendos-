@@ -37,7 +37,7 @@ while True:
 while True:
  valor_inicial = float(input("digite o valor do aporte: "))
  valor_inicial = round(valor_inicial, 2)
- if valor_inicial > df["Close"].iloc[0]:
+ if valor_inicial >= df["Close"].iloc[0]:
   break
  else:
   print("Seu aporte é insuficiente para comprar a ação nesse ano")
@@ -80,6 +80,7 @@ quantidade = int(valor_inicial // df_ano_mes["Close"].iloc[0])
 #variaveis auxiliares
 saldo = (valor_inicial % df["Close"].iloc[0])
 aporte_somado = 0
+dividendos_somados = 0
 df_final = []
 #laço para percorrer o df inteiro e saber a evolução do patrimônio 
 for linha in df_ano_mes.itertuples():
