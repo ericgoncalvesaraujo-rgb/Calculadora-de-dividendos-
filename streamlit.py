@@ -29,7 +29,7 @@ st.markdown("""
 #caixa de ações
 
 st.session_state.acoes = []
-df = pd.DataFrame()
+
 #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
 ticket = str(st.text_input("Digite o código: ")).upper().strip()
 if ticket:
@@ -75,9 +75,9 @@ if aporte_mensal:
 
 
 #organizando arquivos a partir da data 
-
-df[df["Date"]] = pd.to_datetime(df["Date"])
-df = df[df["Date"].dt.datetime.year >= data]
+if df:
+ df[df["Date"]] = pd.to_datetime(df["Date"])
+ df = df[df["Date"].dt.datetime.year >= data]
 
 
 
