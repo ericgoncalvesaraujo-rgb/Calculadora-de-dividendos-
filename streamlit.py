@@ -69,12 +69,13 @@ if st.button("Adicionar ação"):
   hj = dt.datetime.now().year
 
   data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
-  if data:
-    if data <= hj:
-     st.success("Data aceita!!!")
-    else:
-     st.error("data impossivel!!!")
-
+  if st.button("Confirmar data"):
+    if data:
+      if data <= hj:
+       st.success("Data aceita!!!")
+      else:
+       st.error("data impossivel!!!")
+ 
 #pega o valor inicial do aporte
   valor_inicial = st.number_input("Digite o valor do primeiro aporte: ", min_value=1, step=10)
 
