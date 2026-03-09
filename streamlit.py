@@ -24,9 +24,9 @@ st.markdown("""
 
 st.markdown("""
             
-## Calculadora de dividentos
+# Calculadora de dividentos
 
-# Essa calculadora tem como objetivo mostrar o poder dos dividendos e a importância de investir em ações que pagam bons dividendos.
+## Essa calculadora tem como objetivo mostrar o poder dos dividendos e a importância de investir em ações que pagam bons dividendos.
 """)
 
 #caixa de ações
@@ -35,7 +35,8 @@ st.session_state.acoes = []
 
 #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
 ticket = str(st.text_input("Digite o código: ")).upper().strip()
-if ticket not in st.session_state:
+if ticket:
+ if ticket not in st.session_state:
   st.session_state.acoes.append(ticket)
 acao = yf.Ticker(f"{ticket}.SA")
 df = acao.history(interval="1d", period="max")
