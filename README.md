@@ -1,3 +1,5 @@
+# Streamlit em desenvolvimento, mas a logica do programa ja funciona!!!
+
 # Calculadora de Dividendos com Reinvestimento Automático
 
 Simulador de investimento em ações brasileiras com reinvestimento automático de dividendos, utilizando dados históricos do Yahoo Finance.
