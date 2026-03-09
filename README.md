@@ -1,4 +1,4 @@
-# Streamlit em desenvolvimento, mas a logica do programa ja funciona!!!
+# Streamlit em desenvolvimento, mas a calculadora.py funciona!!!
 
 # Calculadora de Dividendos com Reinvestimento Automático
 
