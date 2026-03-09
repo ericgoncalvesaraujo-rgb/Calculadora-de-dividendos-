@@ -11,15 +11,12 @@ st.markdown("""
 <style>
 
 .stApp{
- backgorund-color: black;
+ background-color: black;
  color: white;
  
 </style>
-
-            }
-
-
-""")
+}
+""", unsafe_allow_html=True)
 
 
 st.markdown("""
@@ -79,7 +76,7 @@ if aporte_mensal:
 
 #organizando arquivos a partir da data 
 
-df["Date"] = pd.to_datetime(df["Date"])
+df[df["Date"]] = pd.to_datetime(df["Date"])
 df = df[df["Date"].dt.datetime.year >= data]
 
 
