@@ -53,25 +53,28 @@ df.reset_index(inplace=True)
 
 hj = dt.datetime.now().year
 
-data = st.number_input("Ano do começo dos aportes: ", min_value=1900, max_value=hj, step=1)
-if data <= hj:
-  st.success("Data aceita!!!")
-else:
-  st.error("data impossivel!!!")
+data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
+if data:
+  if data <= hj:
+   st.success("Data aceita!!!")
+  else:
+   st.error("data impossivel!!!")
 
 #pega o valor inicial do aporte
-valor_inicial = st.number_input("Digite o valor do primeiro aporte: ")
-valor_inicial = round(valor_inicial, 2)
-if valor_inicial >= df['Close'].iloc[0]:
+valor_inicial = st.number_input("Digite o valor do primeiro aporte: ", min_value=1, step=10)
+if valor_inicial:
+ valor_inicial = round(valor_inicial, 2)
+ if valor_inicial >= df['Close'].iloc[0]:
   st.success("Valor do aporte aceito!!!")
-else:
+ else:
   st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
 
 #pegar valor do aporte mensal
-aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ")
-aporte_mensal = round(aporte_mensal, 2)
-if aporte_mensal == 0:
- st.info('Não tera aportes mensais')
+aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
+if aporte_mensal:
+ aporte_mensal = round(aporte_mensal, 2)
+ if aporte_mensal == 0:
+  st.info('Não tera aportes mensais')
 
 
 #organizando arquivos a partir da data 
