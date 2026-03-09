@@ -4,7 +4,6 @@ import plotly.express as px
 import yfinance as yf
 from datetime import datetime
 
-hj = datetime.now().year
 #coleta de dados da ação escolhida
 
 while True:
@@ -22,6 +21,7 @@ while True:
 df.reset_index(inplace = True)
 
 #pegando as datas e garantindo serem possíveis
+hj = datetime.now().year
 while True:
  #pega a informação da data do inicio dos aportes
  data = int(input("Ano do começo dos aportes: "))
