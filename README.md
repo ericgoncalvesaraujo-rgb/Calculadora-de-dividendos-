@@ -145,7 +145,7 @@ Fluxo principal:
 Instale as dependências:
 
 ```bash
-pip install pandas plotly yfinance
+pip install pandas plotly yfinance streamlit streamlit_plotly_events
 ```
  Mande o comando após a instalação:
 
