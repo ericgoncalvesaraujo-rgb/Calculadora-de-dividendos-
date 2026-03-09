@@ -5,8 +5,11 @@ import pandas as pd
 import plotly.express as px
 from streamlit_plotly_events import plotly_events
 
+
+#configurações da página
 st.set_page_config(page_title="Calculadora de dividendos")
 
+#mudar as cores e fazer textos 
 st.markdown("""
 <style>
 
@@ -27,7 +30,6 @@ h1 h2 h3 h4 h5 h6{
 
 """, unsafe_allow_html=True)
 
-
 st.markdown("""
             
 # Calculadora de dividentos
@@ -36,58 +38,61 @@ st.markdown("""
 """)
 
 #caixa de ações
-
 st.session_state.acoes = []
+
+#criando um dataframe vazio para receber os dados da ação
 df = pd.DataFrame()
+
 #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
 ticket = str(st.text_input("Digite o código: ")).upper().strip()
-if ticket:
- if ticket not in st.session_state:
-  st.session_state.acoes.append(ticket)
- acao = yf.Ticker(f"{ticket}.SA")
- df = acao.history(interval="1d", period="max")
-#garante que passe somente a ação correta
- if not df.empty:
-   st.success("Ação encontrada!!!")
-#reseta o index para que a data se torne uma coluna
-   df.reset_index(inplace=True)
- else:
-   st.error("acao incorreta ou não existente")
+if st.button("Adicionar ação"):
+ if ticket:
+  if ticket not in st.session_state:
+    st.session_state.acoes.append(ticket)
+  acao = yf.Ticker(f"{ticket}.SA")
+  df = acao.history(interval="1d", period="max")
+  #garante que passe somente a ação correta
+  if not df.empty:
+    st.success("Ação encontrada!!!")
+  #reseta o index para que a data se torne uma coluna
+    df.reset_index(inplace=True)
+  else:
+    st.error("acao incorreta ou não existente")
 
 
 #pegando as datas e garantindo serem possíveis
 
- hj = dt.datetime.now().year
+  hj = dt.datetime.now().year
 
- data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
- if data:
-  if data <= hj:
-   st.success("Data aceita!!!")
-  else:
-   st.error("data impossivel!!!")
+  data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
+  if data:
+    if data <= hj:
+    st.success("Data aceita!!!")
+    else:
+    st.error("data impossivel!!!")
 
 #pega o valor inicial do aporte
- valor_inicial = st.number_input("Digite o valor do primeiro aporte: ", min_value=1, step=10)
+  valor_inicial = st.number_input("Digite o valor do primeiro aporte: ", min_value=1, step=10)
 
- if valor_inicial:
-  valor_inicial = round(valor_inicial, 2)
- if valor_inicial >= df['Close'].iloc[0]:
-  st.success("Valor do aporte aceito!!!")
- else:
-  st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
+  if valor_inicial:
+    valor_inicial = round(valor_inicial, 2)
+  if valor_inicial >= df['Close'].iloc[0]:
+    st.success("Valor do aporte aceito!!!")
+  else:
+    st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
 
 #pegar valor do aporte mensal
- aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
- if aporte_mensal:
-  aporte_mensal = round(aporte_mensal, 2)
-  if aporte_mensal == 0:
-    st.info('Não tera aportes mensais')
+  aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
+  if aporte_mensal:
+    aporte_mensal = round(aporte_mensal, 2)
+    if aporte_mensal == 0:
+      st.info('Não tera aportes mensais')
 
 
 #organizando arquivos a partir da data 
- 
-  df[df["Date"]] = pd.to_datetime(df["Date"])
-  df = df[df["Date"].dt.datetime.year >= data]
+  
+    df[df["Date"]] = pd.to_datetime(df["Date"])
+    df = df[df["Date"].dt.datetime.year >= data]
 
 
 
