@@ -28,7 +28,7 @@ h1 h2 h3 h4 h5 h6{
  color: white;}   
 
 .stButton > button {
-  background-color: #0E1117;
+  background-color: darkblue;
   color: white;}      
 </style>
 
