@@ -16,7 +16,7 @@ nome = yf.Ticker(f"{Ticket}.SA")
 df = nome.history(interval="1d", period="max")
 #garante que passe somente a ação correta
 if not df.empty:
-   st.sucess("Ação encontrada!!!")
+   st.success("Ação encontrada!!!")
 else:
    st.error("acao incorreta ou não existente")
 
@@ -29,7 +29,7 @@ hj = dt.datetime.now().year
 
 data = st.number_input("Ano do começo dos aportes: ", min_value=1900, max_value=hj, step=1)
 if data <= hj:
-  st.sucess("Data aceita!!!")
+  st.success("Data aceita!!!")
 else:
   st.error("data impossivel!!!")
 
@@ -37,7 +37,7 @@ else:
 valor_inicial = st.number_input("Digite o valor do primeiro aporte: ")
 valor_inicial = round(valor_inicial, 2)
 if valor_inicial >= df['Close'].iloc[0]:
-  st.sucess("Valor do aporte aceito!!!")
+  st.success("Valor do aporte aceito!!!")
 else:
   st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
 
