@@ -24,7 +24,7 @@ df.reset_index(inplace = True)
 #pegando as datas e garantindo serem possíveis
 while True:
  #pega a informação da data do inicio dos aportes
- data = int(input("Data do começo dos aportes: "))
+ data = int(input("Ano do começo dos aportes: "))
  #garante data possível 
  if data <= hj:
 
@@ -78,10 +78,10 @@ quantidade_sem_divi = int(valor_inicial // df_ano_mes["Close"].iloc[0])
 #criando o df final
 
 #variaveis auxiliares
-saldo = (valor_inicial % df["Close"].iloc[0])
+saldo = (valor_inicial % df_ano_mes["Close"].iloc[0])
 aporte_somado = 0
 dividendos_somados = 0
-saldo_sem_divi = (valor_inicial % df["Close"].iloc[0])
+saldo_sem_divi = (valor_inicial % df_ano_mes["Close"].iloc[0])
 df_final = []
 #laço para percorrer o df inteiro e saber a evolução do patrimônio 
 for linha in df_ano_mes.itertuples():
@@ -107,7 +107,7 @@ for linha in df_ano_mes.itertuples():
    "ações compradas" : acao_dividendo,
    "ações compradas sem reinvestir" : acao_sem_divi,
    "Dividendos" : linha.Dividends * quantidade_divi,
-   "Dividendos sem reinvestir" : linha.Dividends * quantidade_sem_divi,
+   "Dividendos sem reinvestir" : dividendos_somados,
    "total de ações" : quantidade,
    "total de ações sem reinvestir" : quantidade_sem_divi,
    "Patrimonio" : patrimonio,
@@ -124,20 +124,19 @@ df_final["Data"] = df_final["Data"].dt.to_timestamp()
 gastos = valor_inicial + aporte_somado
 valor_final = round(df_final["Patrimonio"].iloc[-1], 2)
 valor_final_sem_divi = round(df_final["Patrimonio sem reinvestir"].iloc[-1] + dividendos_somados, 2)
-lucro_sem_reenvestir = valor_final_sem_divi - gastos
 
 #porcentagem de lucro desse investimento 
-porcentagem_sem_reenvestir = round((lucro_sem_reenvestir / gastos)* 100, 2)
-porcentagem_reenvestindo = round(((valor_final - gastos)/ gastos) * 100, 2)
+porcentagem_sem_reinvestir = round(((valor_final_sem_divi - gastos)/ gastos)* 100, 2)
+porcentagem_reinvestindo = round(((valor_final - gastos)/ gastos) * 100, 2)
 
 #mostrar os resultados 
-print(f"seu patrimônio seria R$:{lucro_sem_reenvestir} se não tivesse reenvestido os dividendos com lucro de {porcentagem_sem_reenvestir}% e\nR$:{valor_final} seria seu patrimônio se tivesse reenvestido,\num lucro de {porcentagem_reenvestindo}%")
+print(f"seu patrimônio seria R$:{valor_final_sem_divi} se não tivesse reenvestido os dividendos com lucro de {porcentagem_sem_reinvestir}% e\nR$:{valor_final} seria seu patrimônio se tivesse reenvestido,\num lucro de {porcentagem_reinvestindo}%")
 print("Se tivesse investido vamos te mostrar a mudança\n\n")
 
 print("Essa é a tabela da sua evolução patrimonial\n")
 print(df_final, "\n\n")
 print("Aqui está o gráfico da sua evolução patrimônial investimento os dividendos\n")
-fig = px.line(df_final, x = "Data", y = "Patrimonio")
+fig = px.line(df_final, x = "Data", y = ["Patrimonio", "Patrimonio sem reinvestir"])
 fig.show()
 
 
