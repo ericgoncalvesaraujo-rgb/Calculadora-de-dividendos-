@@ -75,7 +75,7 @@ if aporte_mensal:
 
 
 #organizando arquivos a partir da data 
-if df:
+if aporte_mensal:
  df[df["Date"]] = pd.to_datetime(df["Date"])
  df = df[df["Date"].dt.datetime.year >= data]
 
