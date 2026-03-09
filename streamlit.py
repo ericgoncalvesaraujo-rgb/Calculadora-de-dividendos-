@@ -11,7 +11,7 @@ st.markdown("""
 <style>
 
 .stApp{
- background-color: black;
+ background-color: #0E1117;
  color: white;
  
 </style>
@@ -40,11 +40,11 @@ if ticket:
 #garante que passe somente a ação correta
  if not df.empty:
    st.success("Ação encontrada!!!")
+#reseta o index para que a data se torne uma coluna
+   df.reset_index(inplace=True)
  else:
    st.error("acao incorreta ou não existente")
 
-#reseta o index para que a data se torne uma coluna
-df.reset_index(inplace=True)
 
 #pegando as datas e garantindo serem possíveis
 
