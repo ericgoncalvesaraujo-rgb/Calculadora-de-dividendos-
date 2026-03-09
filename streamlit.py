@@ -12,10 +12,19 @@ st.markdown("""
 
 .stApp{
  background-color: #0E1117;
- color: white !important;
- 
-</style>
+ color: white;
 }
+label{
+ color: white !important;
+ }
+            
+p{
+ color: white;}
+            
+h1 h2 h3 h4 h5 h6{
+ color: white;}         
+</style>
+
 """, unsafe_allow_html=True)
 
 
