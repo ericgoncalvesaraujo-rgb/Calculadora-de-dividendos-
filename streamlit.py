@@ -69,10 +69,10 @@ if ticket:
 
 #pegar valor do aporte mensal
  aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
-if aporte_mensal:
- aporte_mensal = round(aporte_mensal, 2)
- if aporte_mensal == 0:
-  st.info('Não tera aportes mensais')
+ if aporte_mensal:
+  aporte_mensal = round(aporte_mensal, 2)
+  if aporte_mensal == 0:
+    st.info('Não tera aportes mensais')
 
 
 #organizando arquivos a partir da data 
