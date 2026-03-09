@@ -6,14 +6,39 @@ import plotly.express as px
 from streamlit_plotly_events import plotly_events
 
 st.set_page_config(page_title="Calculadora de dividendos")
-st.title("Calculadora de dividentos")
 
-#coleta de dados da ação escolhida
+st.markdown("""
+<style>
+
+.stApp{
+ backgorund-color: black;
+ color: white;
+ 
+</style>
+
+            }
+
+
+""")
+
+
+st.markdown("""
+            
+## Calculadora de dividentos
+
+# Essa calculadora tem como objetivo mostrar o poder dos dividendos e a importância de investir em ações que pagam bons dividendos.
+""")
+
+#caixa de ações
+
+st.session_state.acoes = []
 
 #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
-Ticket = str(st.text_input("Digite o código: ")).upper().strip()
-nome = yf.Ticker(f"{Ticket}.SA")
-df = nome.history(interval="1d", period="max")
+ticket = str(st.text_input("Digite o código: ")).upper().strip()
+if ticket not in st.session_state:
+  st.session_state.acoes.append(ticket)
+acao = yf.Ticker(f"{ticket}.SA")
+df = acao.history(interval="1d", period="max")
 #garante que passe somente a ação correta
 if not df.empty:
    st.success("Ação encontrada!!!")
