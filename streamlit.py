@@ -38,12 +38,12 @@ ticket = str(st.text_input("Digite o código: ")).upper().strip()
 if ticket:
  if ticket not in st.session_state:
   st.session_state.acoes.append(ticket)
-acao = yf.Ticker(f"{ticket}.SA")
-df = acao.history(interval="1d", period="max")
+ acao = yf.Ticker(f"{ticket}.SA")
+ df = acao.history(interval="1d", period="max")
 #garante que passe somente a ação correta
-if not df.empty:
+ if not df.empty:
    st.success("Ação encontrada!!!")
-else:
+ else:
    st.error("acao incorreta ou não existente")
 
 #reseta o index para que a data se torne uma coluna
