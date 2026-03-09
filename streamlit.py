@@ -27,7 +27,7 @@ df.reset_index(inplace=True)
 
 hj = dt.datetime.now().year
 while True:
- data = st.number_input("Ano do começo dos aportes: ")
+ data = int(st.number_input("Ano do começo dos aportes: "))
  if data <= hj:
   break
  else:
