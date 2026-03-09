@@ -35,7 +35,7 @@ while True:
  
 #pega o valor inicial do aporte
 while True:
- valor_inicial = float(input("digite o valor do aporte: "))
+ valor_inicial = float(input("digite o valor do primeiro aporte: "))
  valor_inicial = round(valor_inicial, 2)
  if valor_inicial >= df["Close"].iloc[0]:
   break
@@ -44,7 +44,7 @@ while True:
 
 #pegar valor do aporte mensal
 
-aporte_mensal = float(input("digite o valor do aporte mensal:"))
+aporte_mensal = float(input("digite o valor do aporte mensal (caso não for usar coloque 0): "))
 aporte_mensal = round(aporte_mensal, 2)
 if aporte_mensal == 0:
   print("Não tera aportes mensais")
