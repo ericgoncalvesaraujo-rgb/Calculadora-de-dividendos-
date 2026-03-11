@@ -57,12 +57,13 @@ if not st.session_state.acoes:
   acao = yf.Ticker(f"{ticket}.SA")
   df = acao.history(interval="1d", period="max")
   #garante que passe somente a ação correta
-  if not df.empty:
-    st.success("Ação encontrada!!!")
-  #reseta o index para que a data se torne uma coluna
-    df.reset_index(inplace=True)
-  else:
-    st.error("acao incorreta ou não existente")
+  if st.button("Confirmar ação"):
+    if not df.empty:
+      st.success("Ação encontrada!!!")
+    #reseta o index para que a data se torne uma coluna
+      df.reset_index(inplace=True)
+    else:
+      st.error("acao incorreta ou não existente")
 
 
 #pegando as datas e garantindo serem possíveis
