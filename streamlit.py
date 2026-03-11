@@ -109,7 +109,7 @@ if ticket:
             if botao_formulario:
                   st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
                   df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
-                  st.text("Em fase de testes")
+                  st.info("Em fase de testes")
 
 
   
