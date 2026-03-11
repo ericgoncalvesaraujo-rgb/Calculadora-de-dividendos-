@@ -68,10 +68,10 @@ if st.button("Confirmar ação"):
 
 #pegando as datas e garantindo serem possíveis
 
-  hj = dt.datetime.now().year
+hj = dt.datetime.now().year
 
-  data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
-  if st.button("Confirmar data"):
+data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
+if st.button("Confirmar data"):
     if data:
       if data <= hj:
        st.success("Data aceita!!!")
@@ -79,18 +79,18 @@ if st.button("Confirmar ação"):
        st.error("data impossivel!!!")
  
 #pega o valor inicial do aporte
-  valor_inicial = st.number_input("Digite o valor do primeiro aporte: ", min_value=1, step=10)
+valor_inicial = st.number_input("Digite o valor do primeiro aporte: ", min_value=1, step=10)
 
-  if valor_inicial:
+if valor_inicial:
     valor_inicial = round(valor_inicial, 2)
-  if valor_inicial >= df['Close'].iloc[0]:
+if valor_inicial >= df['Close'].iloc[0]:
     st.success("Valor do aporte aceito!!!")
-  else:
+else:
     st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
 
 #pegar valor do aporte mensal
-  aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
-  if aporte_mensal:
+aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
+if aporte_mensal:
     aporte_mensal = round(aporte_mensal, 2)
     if aporte_mensal == 0:
       st.info('Não tera aportes mensais')
