@@ -69,7 +69,7 @@ if not st.session_state.acoes:
             st.success("Ação encontrada!!!")
 
         #pegando as datas e garantindo serem possíveis
-            with st.form("Escolha"):
+        with st.form("Escolha"):
               hj = dt.datetime.now().year
 
               data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
@@ -96,14 +96,14 @@ if not st.session_state.acoes:
                 st.success("Aportes mensais aceitos!!!")
                 if aporte_mensal == 0:
                   st.info('Não tera aportes mensais')
-            botao_formulario = st.form_submit_button("Confirmar")
+                botao_formulario = st.form_submit_button("Confirmar")
 
 
           #organizando arquivos a partir da data 
-            if botao_formulario:
-              st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
-              df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
-            st.text("Em fase de testes")
+                if botao_formulario:
+                  st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
+                  df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
+                  st.text("Em fase de testes")
 
 
   
