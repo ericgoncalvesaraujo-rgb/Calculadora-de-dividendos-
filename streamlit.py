@@ -51,9 +51,10 @@ if "df" not in st.session_state:
 
 #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
 ticket = str(st.text_input("Digite o código: ")).upper().strip()
-if ticket and ticket not in st.session_state.acoes:
+if ticket:
       st.success("Ação adicionada!!!")
-      st.session_state.acoes.append(ticket)
+      if ticket not in st.session_state.acoes:
+       st.session_state.acoes.append(ticket)
       if st.session_state.acoes:
         escolha_acao =  st.selectbox("Adicione ações:" , st.session_state.acoes)
         acao = yf.Ticker(f"{escolha_acao}.SA")
@@ -62,9 +63,10 @@ if ticket and ticket not in st.session_state.acoes:
   #garante que passe somente a ação correta
           if st.session_state.df.empty:
             st.error("acao incorreta ou não existente")
-          #reseta o index para que a data se torne uma coluna
-            st.session_state.df.reset_index(inplace=True)
+  
           else:
+            #reseta o index para que a data se torne uma coluna
+            st.session_state.df.reset_index(inplace=True)
             st.success("Ação encontrada!!!")
 
         #formulario para pegar o ano do começo dos aportes, o valor do primeiro aporte e o valor do aporte mensal
