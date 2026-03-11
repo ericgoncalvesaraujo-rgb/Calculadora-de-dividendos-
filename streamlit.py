@@ -83,10 +83,11 @@ valor_inicial = st.number_input("Digite o valor do primeiro aporte: ", min_value
 
 if valor_inicial:
     valor_inicial = round(valor_inicial, 2)
-if valor_inicial >= df['Close'].iloc[0]:
-    st.success("Valor do aporte aceito!!!")
-else:
-    st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
+if st.button("Confirme o valor do primeiro aporte:"):
+  if valor_inicial >= df['Close'].iloc[0]:
+      st.success("Valor do aporte aceito!!!")
+  else:
+      st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
 
 #pegar valor do aporte mensal
 aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
