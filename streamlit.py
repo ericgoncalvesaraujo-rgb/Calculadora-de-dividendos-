@@ -55,11 +55,11 @@ if not st.session_state.acoes:
    st.session_state.acoes.append(ticket)
    acao = yf.Ticker(f"{ticket}.SA")
    df = acao.history(interval="1d", period="max")
-  
-   if df.empty:
+   if st.button("Adicionar ação"):
+    if df.empty:
       st.error("acao incorreta ou não existente")
 #reseta o index para que a data se torne uma coluna
-   else:
+    else:
         df.reset_index(inplace=True)
         st.info("acao encontrada!!!")
  if not df.empty:
