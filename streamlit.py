@@ -32,6 +32,11 @@ h1 h2 h3 h4 h5 h6{
   color: white;}      
 </style>
 
+.st.form_submit_button > button {
+  background-color: darkblue;
+  color: white;}
+
+            
 """, unsafe_allow_html=True)
 
 st.markdown("""
