@@ -51,15 +51,17 @@ df = pd.DataFrame()
 #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
 if not st.session_state.acoes:
  ticket = str(st.text_input("Digite o código: ")).upper().strip()
- if ticket not in st.session_state.acoes:
-   st.session_state.acoes.append(ticket)
-   acao = yf.Ticker(f"{ticket}.SA")
-   df = acao.history(interval="1d", period="max")
-   if st.button("Adicionar ação"):
+ acao = yf.Ticker(f"{ticket}.SA")
+ df = acao.history(interval="1d", period="max")
+ if st.button("Adicionar ação"):
     if df.empty:
       st.error("acao incorreta ou não existente")
-#reseta o index para que a data se torne uma coluna
+
     else:
+     #garante que a ação seja adicionada somente uma vez
+     if ticket not in st.session_state.acoes:
+      st.session_state.acoes.append(ticket)
+     #reseta o index para que a data se torne uma coluna
      df.reset_index(inplace=True)
      st.info("acao encontrada!!!")
 
@@ -72,7 +74,7 @@ if not st.session_state.acoes:
 
       aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
           
-      botao_questionario = st.submit_button("Enviar")
+      botao_questionario = st.form_submit_button("Enviar")
       #garante que passe somente a ação correta
       if botao_questionario:
       #pegando as datas e garantindo serem possíveis
