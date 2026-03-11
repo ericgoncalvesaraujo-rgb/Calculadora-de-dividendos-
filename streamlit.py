@@ -50,62 +50,62 @@ df = pd.DataFrame()
 
 #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
 if not st.session_state.acoes:
- ticket = str(st.text_input("Digite o código: ")).upper().strip()
- if ticket:
-  if ticket not in st.session_state:
-    st.session_state.acoes.append(ticket)
-  acao = yf.Ticker(f"{ticket}.SA")
-  df = acao.history(interval="1d", period="max")
-  #garante que passe somente a ação correta
-if st.button("Confirmar ação"):
+  ticket = str(st.text_input("Digite o código: ")).upper().strip()
+  if ticket:
+    if ticket not in st.session_state:
+      st.session_state.acoes.append(ticket)
+    acao = yf.Ticker(f"{ticket}.SA")
+    df = acao.history(interval="1d", period="max")
+    #garante que passe somente a ação correta
+  
     if not df.empty:
-      st.success("Ação encontrada!!!")
-    #reseta o index para que a data se torne uma coluna
-      df.reset_index(inplace=True)
+        st.success("Ação encontrada!!!")
+      #reseta o index para que a data se torne uma coluna
+        df.reset_index(inplace=True)
     else:
-      st.error("acao incorreta ou não existente")
+        st.error("acao incorreta ou não existente")
 
 
-#pegando as datas e garantindo serem possíveis
+  #pegando as datas e garantindo serem possíveis
+  with st.form("formulario de acoes"):
+    hj = dt.datetime.now().year
 
-hj = dt.datetime.now().year
+    data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
 
-data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
-if st.button("Confirmar data"):
     if data:
-      if data <= hj:
-       st.success("Data aceita!!!")
-      else:
-       st.error("data impossivel!!!")
- 
-#pega o valor inicial do aporte
-valor_inicial = st.number_input("Digite o valor do primeiro aporte: ", min_value=1, step=10)
+        if data <= hj:
+            st.success("Data aceita!!!")
+        else:
+            st.error("data impossivel!!!")
+      
+      #pega o valor inicial do aporte
+    valor_inicial = st.number_input("Digite o valor do primeiro aporte: ", min_value=1, step=10)
 
-if valor_inicial:
-    valor_inicial = round(valor_inicial, 2)
-if st.button("Confirmar primeiro valor"):
-  if valor_inicial >= df['Close'].iloc[0]:
-      st.success("Valor do aporte aceito!!!")
-  else:
-      st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
+    if valor_inicial:
+          valor_inicial = round(valor_inicial, 2)
+    
+    if valor_inicial >= df['Close'].iloc[0]:
+            st.success("Valor do aporte aceito!!!")
+    else:
+            st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
 
-#pegar valor do aporte mensal
-aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
-if aporte_mensal:
-    aporte_mensal = round(aporte_mensal, 2)
-if st.button("Confirmar valor mensal"):
-    st.info("Valor do aporte mensal aceito!!!")
-    if aporte_mensal == 0:
-      st.info('Não tera aportes mensais')
+      #pegar valor do aporte mensal
+    aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
+    if aporte_mensal:
+          aporte_mensal = round(aporte_mensal, 2)
+          st.info("Valor do aporte mensal aceito!!!")
+          if aporte_mensal == 0:
+            st.info('Não tera aportes mensais')
+    botao_questionario = st.form_submit_button("Confirmar")
 
 
 #organizando arquivos a partir da data 
   
-    df[df["Date"]] = pd.to_datetime(df["Date"])
-    df = df[df["Date"].dt.datetime.year >= data]
+  df[df["Date"]] = pd.to_datetime(df["Date"])
+  df = df[df["Date"].dt.datetime.year >= data]
 
 
 
   
-
+  
 
