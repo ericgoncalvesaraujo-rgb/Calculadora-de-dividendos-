@@ -62,52 +62,52 @@ if not st.session_state.acoes:
     else:
         df.reset_index(inplace=True)
         st.info("acao encontrada!!!")
- if not df.empty:
-  with st.form("formulario de acoes"):
+
+   with st.form("formulario de acoes"):
   
-   hj = dt.datetime.now().year
-   data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
+    hj = dt.datetime.now().year
+    data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
 
-   valor_inicial = st.number_input("Digite o valor do primeiro aporte: ", min_value=1, step=10)
+    valor_inicial = st.number_input("Digite o valor do primeiro aporte: ", min_value=1, step=10)
 
-   aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
-    
-   botao_questionario = st.submit_button("Enviar")
-#garante que passe somente a ação correta
-   if botao_questionario:
-#pegando as datas e garantindo serem possíveis
-    if data:
-      if data <= hj:
-              st.success("Data aceita!!!")
-      else:
-              st.error("data impossivel!!!")
+    aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
+      
+    botao_questionario = st.submit_button("Enviar")
+  #garante que passe somente a ação correta
+    if botao_questionario:
+  #pegando as datas e garantindo serem possíveis
+      if data:
+        if data <= hj:
+                st.success("Data aceita!!!")
+        else:
+                st.error("data impossivel!!!")
+          
+    #pega o valor inicial do aporte
         
-  #pega o valor inicial do aporte
+      if valor_inicial:
+              valor_inicial = round(valor_inicial, 2)
+        
+      if valor_inicial >= df['Close'].iloc[0]:
+                st.success("Valor do aporte aceito!!!")
+      else:
+                st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
+
+    #pegar valor do aporte mensal
       
-    if valor_inicial:
-            valor_inicial = round(valor_inicial, 2)
+      if aporte_mensal:
+        aporte_mensal = round(aporte_mensal, 2)
+        st.info("Valor do aporte mensal aceito!!!")
+        if aporte_mensal == 0:
+          st.info('Não tera aportes mensais')
+        
+
+    #organizando arquivos a partir da data 
       
-    if valor_inicial >= df['Close'].iloc[0]:
-              st.success("Valor do aporte aceito!!!")
-    else:
-              st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
+      df[df["Date"]] = pd.to_datetime(df["Date"])
+      df = df[df["Date"].dt.datetime.year >= data]
 
-  #pegar valor do aporte mensal
-    
-    if aporte_mensal:
-      aporte_mensal = round(aporte_mensal, 2)
-      st.info("Valor do aporte mensal aceito!!!")
-      if aporte_mensal == 0:
-        st.info('Não tera aportes mensais')
+
+
       
-
-  #organizando arquivos a partir da data 
-    
-    df[df["Date"]] = pd.to_datetime(df["Date"])
-    df = df[df["Date"].dt.datetime.year >= data]
-
-
-
-    
-    
+      
 
