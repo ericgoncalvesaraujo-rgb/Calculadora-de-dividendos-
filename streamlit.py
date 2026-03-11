@@ -46,15 +46,21 @@ if "acoes" not in st.session_state:
  st.session_state.acoes = []
 
 #criando um dataframe vazio para receber os dados da ação
-df = pd.DataFrame()
+if "df" not in st.session_state:
+  st.session_state.df = pd.DataFrame()
 
 #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
 if not st.session_state.acoes:
  ticket = str(st.text_input("Digite o código: ")).upper().strip()
- acao = yf.Ticker(f"{ticket}.SA")
- df = acao.history(interval="1d", period="max")
+ st.session_state.acoes.append(ticket)
+ if st.session_state.acoes:
+      ticket = str(st.text_input("Digite o código: ")).upper().strip()
+      st.session_state.acoes.append(ticket)
+      acao_selecionada = st.selectbox("Selecione ação", st.session_state.acoes)
+      acao = yf.Ticker(f"{acao_selecionada}.SA")
+      st.session_state.df = acao.history(interval="1d", period="max")
  if st.button("Adicionar ação"):
-    if df.empty:
+    if st.session_state.df.empty:
       st.error("acao incorreta ou não existente")
 
     else:
@@ -62,7 +68,7 @@ if not st.session_state.acoes:
      if ticket not in st.session_state.acoes:
       st.session_state.acoes.append(ticket)
      #reseta o index para que a data se torne uma coluna
-     df.reset_index(inplace=True)
+     st.session_state.df.reset_index(inplace=True)
      st.info("acao encontrada!!!")
 
      with st.form("formulario de acoes"):
@@ -89,7 +95,7 @@ if not st.session_state.acoes:
           if valor_inicial:
             valor_inicial = round(valor_inicial, 2)
             
-          if valor_inicial >= df['Close'].iloc[0]:
+          if valor_inicial >= st.session_state.df['Close'].iloc[0]:
             st.success("Valor do aporte aceito!!!")
           else:
             st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
@@ -104,8 +110,7 @@ if not st.session_state.acoes:
             
 
           #organizando arquivos a partir da data 
-          df[df["Date"]] = pd.to_datetime(df["Date"])
-          df = df[df["Date"].dt.datetime.year >= data]
+          
 
 
 
