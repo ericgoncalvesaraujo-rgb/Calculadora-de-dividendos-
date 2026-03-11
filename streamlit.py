@@ -57,10 +57,12 @@ with st.form("formulario de acoes"):
     st.session_state.acoes.append(ticket)
   acao = yf.Ticker(f"{ticket}.SA")
   df = acao.history(interval="1d", period="max")
+
+  botao_acao = st.form_submit_button("Adicionar ação")
   #garante que passe somente a ação correta
-  if not df.empty:
+  if not df.empty and botao_acao:
     st.success("Ação encontrada!!!")
-    st.form_submit_button("Adicionar ação")
+
   #reseta o index para que a data se torne uma coluna
     df.reset_index(inplace=True)
   else:
