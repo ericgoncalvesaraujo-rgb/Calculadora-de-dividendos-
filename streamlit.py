@@ -49,20 +49,16 @@ if "açoes" not in st.session_state:
 df = pd.DataFrame()
 
 #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
-
-with st.form("formulario de acoes"):
+if not ticket:
  ticket = str(st.text_input("Digite o código: ")).upper().strip()
  if ticket:
   if ticket not in st.session_state:
     st.session_state.acoes.append(ticket)
   acao = yf.Ticker(f"{ticket}.SA")
   df = acao.history(interval="1d", period="max")
-
-  botao_acao = st.form_submit_button("Adicionar ação")
   #garante que passe somente a ação correta
-  if not df.empty and botao_acao:
+  if not df.empty:
     st.success("Ação encontrada!!!")
-
   #reseta o index para que a data se torne uma coluna
     df.reset_index(inplace=True)
   else:
