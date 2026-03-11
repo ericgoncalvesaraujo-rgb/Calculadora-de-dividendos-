@@ -54,8 +54,6 @@ if not st.session_state.acoes:
  ticket = str(st.text_input("Digite o novo código: ")).upper().strip()
  st.session_state.acoes.append(ticket)
  if st.session_state.acoes:
-      ticket = str(st.text_input("Digite o código: ")).upper().strip()
-      st.session_state.acoes.append(ticket)
       acao_selecionada = st.selectbox("Selecione ação", st.session_state.acoes)
       acao = yf.Ticker(f"{acao_selecionada}.SA")
       st.session_state.df = acao.history(interval="1d", period="max")
