@@ -106,6 +106,13 @@ if not st.session_state.acoes:
             st.text("Em fase de testes")
 
 
+  
+
+
+
+
+
+
         
 
 
