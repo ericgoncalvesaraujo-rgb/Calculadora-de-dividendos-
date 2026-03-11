@@ -57,7 +57,7 @@ if not st.session_state.acoes:
   acao = yf.Ticker(f"{ticket}.SA")
   df = acao.history(interval="1d", period="max")
   #garante que passe somente a ação correta
-if st.button("Confirmar"):
+if st.button("Confirmar ação"):
     if not df.empty:
       st.success("Ação encontrada!!!")
     #reseta o index para que a data se torne uma coluna
@@ -71,7 +71,7 @@ if st.button("Confirmar"):
 hj = dt.datetime.now().year
 
 data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
-if st.button("Confirmar"):
+if st.button("Confirmar data"):
     if data:
       if data <= hj:
        st.success("Data aceita!!!")
@@ -83,7 +83,7 @@ valor_inicial = st.number_input("Digite o valor do primeiro aporte: ", min_value
 
 if valor_inicial:
     valor_inicial = round(valor_inicial, 2)
-if st.button("Confirmar"):
+if st.button("Confirmar primeiro valor"):
   if valor_inicial >= df['Close'].iloc[0]:
       st.success("Valor do aporte aceito!!!")
   else:
@@ -93,7 +93,7 @@ if st.button("Confirmar"):
 aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
 if aporte_mensal:
     aporte_mensal = round(aporte_mensal, 2)
-if st.button("Confirmar"):
+if st.button("Confirmar valor mensal"):
     st.info("Valor do aporte mensal aceito!!!")
     if aporte_mensal == 0:
       st.info('Não tera aportes mensais')
