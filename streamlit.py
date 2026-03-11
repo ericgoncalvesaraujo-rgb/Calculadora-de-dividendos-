@@ -42,14 +42,16 @@ st.markdown("""
 """)
 
 #caixa de ações
-st.session_state.acoes = []
+if "açoes" not in st.session_state:
+ st.session_state.acoes = []
 
 #criando um dataframe vazio para receber os dados da ação
 df = pd.DataFrame()
 
 #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
-ticket = str(st.text_input("Digite o código: ")).upper().strip()
-if st.button("Adicionar ação"):
+
+with st.form("formulario de acoes"):
+ ticket = str(st.text_input("Digite o código: ")).upper().strip()
  if ticket:
   if ticket not in st.session_state:
     st.session_state.acoes.append(ticket)
@@ -58,6 +60,7 @@ if st.button("Adicionar ação"):
   #garante que passe somente a ação correta
   if not df.empty:
     st.success("Ação encontrada!!!")
+    st.form_submit_button("Adicionar ação")
   #reseta o index para que a data se torne uma coluna
     df.reset_index(inplace=True)
   else:
