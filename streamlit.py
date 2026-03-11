@@ -50,12 +50,12 @@ if "df" not in st.session_state:
  st.session_state.df = pd.DataFrame()
 
 #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
-if st.session_state.df.empty:
+if not st.session_state.acoes:
   ticket = str(st.text_input("Digite o código: ")).upper().strip()
   if st.button("Confirmar ação!!!"):
    if ticket and ticket not in st.session_state.acoes:
       st.session_state.acoes.append(ticket)
-      if session_state.acoes:
+      if st.session_state.acoes:
         escolha_acao =  st.selectbox("Adicione ações:" , st.session_state.acoes)
         acao = yf.Ticker(f"{escolha_acao}.SA")
         st.session_state.df = acao.history(interval="1d", period="max")
@@ -106,9 +106,6 @@ if st.session_state.df.empty:
             st.text("Em fase de testes")
 
 
+        
 
-
-
-      
-      
 
