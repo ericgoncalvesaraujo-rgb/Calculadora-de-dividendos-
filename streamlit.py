@@ -49,7 +49,7 @@ if "açoes" not in st.session_state:
 df = pd.DataFrame()
 
 #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
-if not session_state.acoes:
+if not st.session_state.acoes:
  ticket = str(st.text_input("Digite o código: ")).upper().strip()
  if ticket:
   if ticket not in st.session_state:
