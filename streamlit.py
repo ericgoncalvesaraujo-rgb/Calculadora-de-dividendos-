@@ -80,9 +80,9 @@ if ticket:
 
            aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
 
-           botao_formulario = st.form_submit_button("Confirmar")
+           
          #pegando as datas e garantindo serem possíveis   
-          if botao_formulario: 
+      
            if data:
             if data <= hj:
              st.success("Data aceita!!!")
@@ -90,7 +90,7 @@ if ticket:
               st.error("data impossivel!!!")
             
           #pega o valor inicial do aporte
-          if valor_inicial and not st.session_state.df.empty:
+           if valor_inicial and not st.session_state.df.empty:
             valor_inicial = round(valor_inicial, 2)
             if valor_inicial >= st.session_state.df['Close'].iloc[0]:
               st.success("Valor do aporte aceito!!!")
@@ -104,22 +104,26 @@ if ticket:
               if aporte_mensal == 0:
                st.info('Não tera aportes mensais')
 
-          #organizando arquivos a partir da data 
-          if botao_formulario:
-            #transformando em df e organizando a data
-            st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
-            df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
+           botao_formulario = st.form_submit_button("Confirmar")
+           
+           #organizando arquivos a partir da data 
+           if botao_formulario:
+            st.session_state.botao = True
+           if "botao" in st.session_state:
+              #transformando em df e organizando a data
+              st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
+              df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
 
-            #colocando a data em mes
+              #colocando a data em mes
 
-            df["Date"] = pd.to_datetime(df["Date"]).dt.period("M")
-            
-            #guardando o arquivo para modificações
-            df_copia = df.copy()
-            df = df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" 
-            })
+              df["Date"] = pd.to_datetime(df["Date"]).dt.period("M")
+              
+              #guardando o arquivo para modificações
+              df_copia = df.copy()
+              df = df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" 
+              })
 
-            st.line_chart(df["Close"])
+              st.line_chart(df["Close"])
 
 
 
