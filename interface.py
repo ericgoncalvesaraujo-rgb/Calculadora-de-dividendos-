@@ -80,15 +80,16 @@ if ticket:
 
        aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
 
+       botao_formulario = st.form_submit_button("Confirmar escolhas")
        #pegando as datas e garantindo serem possíveis   
       
-       if data <= hj:
+      if data <= hj:
         st.success("Data aceita!!!")
-       else:
+      else:
         st.error("data impossivel!!!")
             
        #pega o valor inicial do aporte
-       if valor_inicial and not st.session_state.df.empty:
+      if valor_inicial and not st.session_state.df.empty:
         valor_inicial = round(valor_inicial, 2)
         if valor_inicial >= st.session_state.df['Close'].iloc[0]:
           st.success("Valor do aporte aceito!!!")
@@ -96,16 +97,15 @@ if ticket:
           st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
 
             #pegar valor do aporte mensal
-       if aporte_mensal > 0:
+      if aporte_mensal > 0:
         aporte_mensal = round(aporte_mensal, 2)
         st.success("Aportes mensais aceitos!!!")
-       if aporte_mensal == 0:
+      if aporte_mensal == 0:
         st.info('Não tera aportes mensais')
 
-       botao_formulario = st.form_submit_button("Confirmar escolhas")
-       if botao_formulario:
-         st.session_state.grafico = True
-         if st.session_state.grafico:
+      
+      st.session_state.grafico = True
+      if st.session_state.grafico:
 
           st.success("Escolhas confirmadas!!!")
           st.write("Organizando os dados...")    
@@ -126,7 +126,7 @@ if ticket:
           st.session_state.df['Date'] = st.session_state.df['Date'].astype(str)
                 
           st.line_chart(st.session_state.df, x="Date", y="Close", title="Valor da ação ao longo do tempo")
-      st.text_input("gostou")
+          st.text_input("gostou?")
  
 
   
