@@ -102,10 +102,10 @@ if ticket:
        if aporte_mensal == 0:
         st.info('Não tera aportes mensais')
 
-       if st.button("Confirmar dados"):
+       if st.form_submit_button("Confirmar escolhas"):
            
-       #organizando arquivos a partir da data 
- #transformando em df e organizando a data
+        #organizando arquivos a partir da data 
+        #transformando em df e organizando a data
         st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
         df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
 
@@ -115,8 +115,7 @@ if ticket:
                     
               #guardando o arquivo para modificações
         df_copia = df.copy()
-        df = df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" 
-        })
+        df = df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" })
 
         df.reset_index(inplace=True)
         df['Date'] = df['Date'].astype(str)
