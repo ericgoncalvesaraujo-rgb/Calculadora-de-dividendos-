@@ -112,14 +112,14 @@ if ticket:
 
             #colocando a data em mes
 
-            df["Date"] = pd.to_datetime(["Date"]).dt.period("M")
+            df["Date"] = pd.to_datetime(df["Date"]).dt.period("M")
             
             #guardando o arquivo para modificações
             df_copia = df.copy()
             df = df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" 
             })
 
-            st.line_chart(df)
+            st.line_chart(df["Close"])
 
 
 
