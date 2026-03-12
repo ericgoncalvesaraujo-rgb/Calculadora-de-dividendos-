@@ -58,10 +58,10 @@ if ticket:
       if ticket not in st.session_state.acoes:
        st.session_state.acoes.append(ticket)
       if st.session_state.acoes:
-        escolha_acao =  st.selectbox("Adicione ações:" , st.session_state.acoes)
-        acao = yf.Ticker(f"{escolha_acao}.SA")
-        st.session_state.df = acao.history(interval="1d", period="max")
         if st.button("Confirmar ação"):
+          escolha_acao =  st.selectbox("Adicione ações:" , st.session_state.acoes)
+          acao = yf.Ticker(f"{escolha_acao}.SA")
+          st.session_state.df = acao.history(interval="1d", period="max")
   #garante que passe somente a ação correta
           if st.session_state.df.empty:
             st.error("acao incorreta ou não existente")
@@ -103,7 +103,7 @@ if ticket:
               st.success("Aportes mensais aceitos!!!")
               if aporte_mensal == 0:
                st.info('Não tera aportes mensais')
-               
+
           #organizando arquivos a partir da data 
           if botao_formulario:
                   st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
