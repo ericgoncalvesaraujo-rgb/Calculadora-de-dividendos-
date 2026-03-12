@@ -106,11 +106,19 @@ if ticket:
 
           #organizando arquivos a partir da data 
           if botao_formulario:
+            #transformando em df e organizando a data
             st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
             df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
-            st.info("Em fase de testes")
+
+            #colocando a data em mes
+
+            df["Date"] = pd.to_datetime(["Date"]).dt.period("M")
+            
+            #guardando o arquivo para modificações
             df_copia = df.copy()
-            df = df.groupby("Date")["Close"].max()
+            df = df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" 
+            })
+
             st.line_chart(df)
 
 
