@@ -102,7 +102,7 @@ if ticket:
        if aporte_mensal == 0:
         st.info('Não tera aportes mensais')
 
-       botao_formulario = st.form_submit_button("Confirmar escolhas"):
+       botao_formulario = st.form_submit_button("Confirmar escolhas")
        if botao_formulario:
          st.session_state.grafico = True
          if st.session_state.grafico:
