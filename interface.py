@@ -112,20 +112,21 @@ if ticket:
           #organizando arquivos a partir da data 
           #transformando em df e organizando a data
           st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
-          df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
+          st.session_state.df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
 
                 #colocando a data em mes
 
-          df["Date"] = pd.to_datetime(df["Date"]).dt.to_period("M")
+          st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"]).dt.to_period("M")
                       
                 #guardando o arquivo para modificações
-          df_copia = df.copy()
-          df = df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" })
+          st.session_state.df_copia = st.session_state.df.copy()
+          st.session_state.df = st.session_state.df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" })
 
-          df.reset_index(inplace=True)
-          df['Date'] = df['Date'].astype(str)
+          st.session_state.df.reset_index(inplace=True)
+          st.session_state.df['Date'] = st.session_state.df['Date'].astype(str)
                 
-st.line_chart(df, x="Date", y="Close", title="Valor da ação ao longo do tempo")
+          st.line_chart(st.session_state.df, x="Date", y="Close", title="Valor da ação ao longo do tempo")
+      st.text_input("gostou")
  
 
   
