@@ -3,7 +3,7 @@ import datetime as dt
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from streamlit_plotly_events import plotly_events # type: ignore
+from streamlit_plotly_events import plotly_events
 
 
 #configurações da página
@@ -53,7 +53,8 @@ if "df" not in st.session_state:
 
 #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
 ticket = str(st.text_input("Digite o código: ")).upper().strip()
-if ticket:
+if st.button("Adicionar ação"):
+ if ticket:
       st.success("Ação adicionada!!!")
       if ticket not in st.session_state.acoes:
        st.session_state.acoes.append(ticket)
