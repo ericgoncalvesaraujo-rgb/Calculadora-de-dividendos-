@@ -80,8 +80,9 @@ if st.session_state.acoes:
         
         aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
         
-        if st.form_submit_button("Confirmar aporte mensal"):
-
+        submit_button = st.form_submit_button("Confirmar aporte mensal")
+        if submit_button :
+         submit_button = True
          st.session_state.hj = hj
          st.session_state.data = data
          st.session_state.valor_inicial = valor_inicial
