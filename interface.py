@@ -72,7 +72,7 @@ if st.session_state.acoes:
       st.success("Ação encontrada!!!")
 
       #formulario para pegar o ano do começo dos aportes, o valor do primeiro aporte e o valor do aporte mensal
-      with st.form("form"):
+    with st.form("form"):
         hj = dt.datetime.now().year
         data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
 
@@ -92,7 +92,7 @@ if st.session_state.acoes:
          st.session_state.grafico = True
         
          #pegando as datas e garantindo serem possíveis   
-      if st.session_state.get("grafico"):
+    if st.session_state.get("grafico"):
           if st.session_state.data <= st.session_state.hj:
             st.success("Data aceita!!!")
           else:
@@ -131,7 +131,7 @@ if st.session_state.acoes:
 
              st.session_state.df.reset_index(inplace=True)
              st.session_state.df['Date'] = st.session_state.df['Date'].astype(str)
-      if st.button("Chamar grafico"):
+    if st.button("Chamar grafico"):
               st.line_chart(st.session_state.df, x="Date", y="Close", title="Valor da ação ao longo do tempo")
               st.text_input("gostou?")
     
