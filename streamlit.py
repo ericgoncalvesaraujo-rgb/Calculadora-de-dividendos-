@@ -109,9 +109,9 @@ if ticket:
             st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
             df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
             st.info("Em fase de testes")
-
-            df.groupby("Date")["Close"].max()
-            st.line_chart()
+            df_copia = df.copy()
+            df = df.groupby("Date")["Close"].max()
+            st.line_chart(df)
 
 
 
