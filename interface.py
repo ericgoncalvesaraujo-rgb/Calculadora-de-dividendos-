@@ -53,8 +53,7 @@ if "df" not in st.session_state:
 
 #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
 ticket = str(st.text_input("Digite o código: ")).upper().strip()
-if st.button("Adicionar ação"):
- if ticket:
+if ticket:
       st.success("Ação adicionada!!!")
       if ticket not in st.session_state.acoes:
        st.session_state.acoes.append(ticket)
