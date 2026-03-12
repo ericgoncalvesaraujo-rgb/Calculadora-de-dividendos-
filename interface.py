@@ -105,25 +105,24 @@ if ticket:
        botao_formulario = st.form_submit_button("Confirmar")
            
        #organizando arquivos a partir da data 
-       if botao_formulario:
-        #transformando em df e organizando a data
-        st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
-        df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
+  if botao_formulario:
+ #transformando em df e organizando a data
+   st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
+   df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
 
         #colocando a data em mes
 
-        df["Date"] = pd.to_datetime(df["Date"]).dt.to_period("M")
+   df["Date"] = pd.to_datetime(df["Date"]).dt.to_period("M")
               
         #guardando o arquivo para modificações
-        df_copia = df.copy()
-        df = df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" 
-        })
+   df_copia = df.copy()
+   df = df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" 
+   })
 
-        df.reset_index(inplace=True)
+   df.reset_index(inplace=True)
         
-        st.line_chart(x=df['Date'], y=df['Close'])
-
-
+   st.line_chart(x=df['Date'], y=df['Close'])
+ 
 
   
 
