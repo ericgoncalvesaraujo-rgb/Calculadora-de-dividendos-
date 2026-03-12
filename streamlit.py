@@ -80,9 +80,10 @@ if ticket:
 
            aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
 
-           
-         #pegando as datas e garantindo serem possíveis    
-          if data:
+           botao_formulario = st.form_submit_button("Confirmar")
+         #pegando as datas e garantindo serem possíveis   
+          if botao_formulario: 
+           if data:
             if data <= hj:
              st.success("Data aceita!!!")
             else:
@@ -102,10 +103,7 @@ if ticket:
               st.success("Aportes mensais aceitos!!!")
               if aporte_mensal == 0:
                st.info('Não tera aportes mensais')
-
-          botao_formulario = st.form_submit_button("Confirmar") 
-
-
+               
           #organizando arquivos a partir da data 
           if botao_formulario:
                   st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
