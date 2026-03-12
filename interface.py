@@ -72,70 +72,72 @@ if ticket:
       st.success("Ação encontrada!!!")
 
       #formulario para pegar o ano do começo dos aportes, o valor do primeiro aporte e o valor do aporte mensal
-      with st.form("Escolha"):
-       hj = dt.datetime.now().year
-       data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
-           
-       valor_inicial = st.number_input("Digite o valor do primeiro aporte: ", min_value=1, step=10)
-
-       aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
-
-       botao_formulario = st.form_submit_button("Confirmar escolhas")
-       #pegando as datas e garantindo serem possíveis   
       
-      if data <= hj:
-        st.success("Data aceita!!!")
-      else:
-        st.error("data impossivel!!!")
-            
-       #pega o valor inicial do aporte
-      if valor_inicial and not st.session_state.df.empty:
-        valor_inicial = round(valor_inicial, 2)
-        if valor_inicial >= st.session_state.df['Close'].iloc[0]:
-          st.success("Valor do aporte aceito!!!")
-        else:
-          st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
-
-            #pegar valor do aporte mensal
-      if aporte_mensal > 0:
-        aporte_mensal = round(aporte_mensal, 2)
-        st.success("Aportes mensais aceitos!!!")
-      if aporte_mensal == 0:
-        st.info('Não tera aportes mensais')
-
+      hj = dt.datetime.now().year
+      data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
+      if st.button("Confirmar data"):
+        valor_inicial = st.number_input("Digite o valor do primeiro aporte: ", min_value=1, step=10)
+      if data:
+        if st.button("Confirmar valor inicial"):
+         aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0, step=10)
+      if aporte_mensal:
+        if st.button("Confirmar aporte mensal"):
+          
+         #pegando as datas e garantindo serem possíveis   
       
-      st.session_state.grafico = True
-      if st.session_state.grafico:
-
-          st.success("Escolhas confirmadas!!!")
-          st.write("Organizando os dados...")    
-          #organizando arquivos a partir da data 
-          #transformando em df e organizando a data
-          st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
-          st.session_state.df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
-
-                #colocando a data em mes
-
-          st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"]).dt.to_period("M")
-                      
-                #guardando o arquivo para modificações
-          st.session_state.df_copia = st.session_state.df.copy()
-          st.session_state.df = st.session_state.df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" })
-
-          st.session_state.df.reset_index(inplace=True)
-          st.session_state.df['Date'] = st.session_state.df['Date'].astype(str)
+          if data <= hj:
+            st.success("Data aceita!!!")
+          else:
+            st.error("data impossivel!!!")
                 
-          st.line_chart(st.session_state.df, x="Date", y="Close", title="Valor da ação ao longo do tempo")
-          st.text_input("gostou?")
- 
+          #pega o valor inicial do aporte
+          if valor_inicial and not st.session_state.df.empty:
+            valor_inicial = round(valor_inicial, 2)
+            if valor_inicial >= st.session_state.df['Close'].iloc[0]:
+              st.success("Valor do aporte aceito!!!")
+            else:
+              st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
 
-  
+                #pegar valor do aporte mensal
+          if aporte_mensal > 0:
+            aporte_mensal = round(aporte_mensal, 2)
+            st.success("Aportes mensais aceitos!!!")
+          if aporte_mensal == 0:
+            st.info('Não tera aportes mensais')
+
+          
+          st.session_state.grafico = True
+          if st.session_state.grafico:
+
+              st.success("Escolhas confirmadas!!!")
+              st.write("Organizando os dados...")    
+              #organizando arquivos a partir da data 
+              #transformando em df e organizando a data
+              st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
+              st.session_state.df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
+
+                    #colocando a data em mes
+
+              st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"]).dt.to_period("M")
+                          
+                    #guardando o arquivo para modificações
+              st.session_state.df_copia = st.session_state.df.copy()
+              st.session_state.df = st.session_state.df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" })
+
+              st.session_state.df.reset_index(inplace=True)
+              st.session_state.df['Date'] = st.session_state.df['Date'].astype(str)
+                    
+              st.line_chart(st.session_state.df, x="Date", y="Close", title="Valor da ação ao longo do tempo")
+              st.text_input("gostou?")
+    
+
+      
 
 
 
 
 
 
-        
+            
 
 
