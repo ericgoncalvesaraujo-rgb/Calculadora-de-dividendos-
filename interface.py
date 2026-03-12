@@ -125,7 +125,7 @@ if ticket:
           df.reset_index(inplace=True)
           df['Date'] = df['Date'].astype(str)
                 
-          st.line_chart(df, x="Date", y="Close", title="Valor da ação ao longo do tempo")
+st.line_chart(df, x="Date", y="Close", title="Valor da ação ao longo do tempo")
  
 
   
