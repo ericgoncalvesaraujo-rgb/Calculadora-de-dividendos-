@@ -54,7 +54,6 @@ if "df" not in st.session_state:
 #pega uma ação do yahoo finance e adiciona a sigla ".SA" por ser br
 ticket = str(st.text_input("Digite o código: ")).upper().strip()
 if ticket:
-  st.success("Ação adicionada!!!")
   if ticket not in st.session_state.acoes:
     st.session_state.acoes.append(ticket)
   if st.session_state.acoes:
@@ -64,12 +63,11 @@ if ticket:
     st.session_state.df = acao.history(interval="1d", period="max")
     #garante que passe somente a ação correta
     if st.session_state.df.empty:
-      st.error("acao incorreta ou não existente")
+      pass
   
     else:
       #reseta o index para que a data se torne uma coluna
       st.session_state.df.reset_index(inplace=True)
-      st.success("Ação encontrada!!!")
 
       #formulario para pegar o ano do começo dos aportes, o valor do primeiro aporte e o valor do aporte mensal
       hj = dt.datetime.now().year
@@ -82,43 +80,42 @@ if ticket:
        #pegando as datas e garantindo serem possíveis   
       
       if data <= hj:
-       st.success("Data aceita!!!")
+       pass
       else:
-        st.error("data impossivel!!!")
+        pass
             
        #pega o valor inicial do aporte
       if valor_inicial and not st.session_state.df.empty:
         valor_inicial = round(valor_inicial, 2)
       if valor_inicial >= st.session_state.df['Close'].iloc[0]:
-        st.success("Valor do aporte aceito!!!")
+        pass
       else:
-       st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
+       pass
 
             #pegar valor do aporte mensal
       if aporte_mensal > 0:
        aporte_mensal = round(aporte_mensal, 2)
-       st.success("Aportes mensais aceitos!!!")
       if aporte_mensal == 0:
-       st.info('Não tera aportes mensais')
+       pass
 
       if st.button("Gerar gráficos"):
         #organizando arquivos a partir da data 
         #transformando em df e organizando a data
         st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
-        df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
+        st.session_state.df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
 
               #colocando a data em mes
 
-        df["Date"] = pd.to_datetime(df["Date"]).dt.to_period("M")
+        st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"]).dt.to_period("M")
                     
               #guardando o arquivo para modificações
-        df_copia = df.copy()
-        df = df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" })
+        df_copia = st.session_state.df.copy()
+        st.session_state.df = st.session_state.df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" })
 
-        df.reset_index(inplace=True)
-        df['Date'] = df['Date'].astype(str)
+        st.session_state.df.reset_index(inplace=True)
+        st.session_state.df['Date'] = st.session_state.df['Date'].astype(str)
               
-        st.line_chart(df, x="Date", y="Close", title="Valor da ação ao longo do tempo")
+        st.line_chart(st.session_state.df, x="Date", y="Close", title="Valor da ação ao longo do tempo")
  
 
   
