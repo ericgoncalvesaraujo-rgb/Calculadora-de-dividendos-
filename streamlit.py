@@ -38,7 +38,7 @@ button {
 
 st.markdown("""
             
-# Calculadora de dividentos
+# Calculadora de dividendos
 
 ## Essa calculadora tem como objetivo mostrar o poder dos dividendos e a importância de investir em ações que pagam bons dividendos.
 """)
@@ -58,7 +58,7 @@ if ticket:
       if ticket not in st.session_state.acoes:
        st.session_state.acoes.append(ticket)
       if st.session_state.acoes:
-        escolha_acao =  st.selectbox("Adicione ações:" , st.session_state.acoes)
+        escolha_acao =  st.selectbox("Escolha a ação:" , st.session_state.acoes)
         if st.button("Confirmar ação"):         
           acao = yf.Ticker(f"{escolha_acao}.SA")
           st.session_state.df = acao.history(interval="1d", period="max")
@@ -109,6 +109,10 @@ if ticket:
                   st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
                   df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
                   st.info("Em fase de testes")
+
+          df.groupby("Date")["Close"].max()
+          st.line_chart()
+
 
 
   
