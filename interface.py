@@ -72,7 +72,6 @@ if st.session_state.acoes:
       st.success("Ação encontrada!!!")
 
       #formulario para pegar o ano do começo dos aportes, o valor do primeiro aporte e o valor do aporte mensal
-      st.session_state.get("grafico") = True
       with st.form("form"):
         hj = dt.datetime.now().year
         data = st.number_input("Ano do começo dos aportes: ", min_value=1, max_value=hj, step=1)
@@ -84,7 +83,7 @@ if st.session_state.acoes:
         if st.form_submit_button("Confirmar aporte mensal"):
           st.session_state.grafico = True
          #pegando as datas e garantindo serem possíveis   
-      if st.session_state.get("grafico"):
+      if st.session_state.grafico:
           if data <= hj:
             st.success("Data aceita!!!")
           else:
