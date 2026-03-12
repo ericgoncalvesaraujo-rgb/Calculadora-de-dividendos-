@@ -60,8 +60,8 @@ if ticket not in st.session_state.acoes:
 if st.session_state.acoes:
   escolha_acao =  st.selectbox("Escolha a ação:" , st.session_state.acoes)
   if st.button("Confirmar ação"):         
-    acao = yf.Ticker(f"{escolha_acao}.SA")
-    st.session_state.df = acao.history(interval="1d", period="max")
+    st.session_state.acao = yf.Ticker(f"{escolha_acao}.SA")
+    st.session_state.df = st.session_state.acao.history(interval="1d", period="max")
     #garante que passe somente a ação correta
     if st.session_state.df.empty:
       st.error("acao incorreta ou não existente")
