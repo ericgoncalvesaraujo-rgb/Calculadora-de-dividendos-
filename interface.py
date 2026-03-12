@@ -123,7 +123,7 @@ if ticket:
               df = df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" 
               })
 
-              
+              df.reset_index(inplace=True)
 
               st.line_chart(df["Close"])
 
