@@ -102,26 +102,26 @@ if ticket:
        if aporte_mensal == 0:
         st.info('Não tera aportes mensais')
 
-       botao_formulario = st.form_submit_button("Confirmar")
+       if st.button("Confirmar dados"):
            
        #organizando arquivos a partir da data 
-  if botao_formulario:
  #transformando em df e organizando a data
-   st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
-   df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
+        st.session_state.df["Date"] = pd.to_datetime(st.session_state.df["Date"])
+        df = st.session_state.df[st.session_state.df["Date"].dt.year >= data]
 
-        #colocando a data em mes
+              #colocando a data em mes
 
-   df["Date"] = pd.to_datetime(df["Date"]).dt.to_period("M")
+        df["Date"] = pd.to_datetime(df["Date"]).dt.to_period("M")
+                    
+              #guardando o arquivo para modificações
+        df_copia = df.copy()
+        df = df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" 
+        })
+
+        df.reset_index(inplace=True)
+        df['Date'] = df['Date'].astype(str)
               
-        #guardando o arquivo para modificações
-   df_copia = df.copy()
-   df = df.groupby("Date").agg({"Close" : "last", "Dividends" : "sum" 
-   })
-
-   df.reset_index(inplace=True)
-        
-   st.line_chart(x=df['Date'], y=df['Close'])
+        st.line_chart(df, x="Date", y="Close", title="Valor da ação ao longo do tempo")
  
 
   
