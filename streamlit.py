@@ -97,7 +97,7 @@ if ticket:
               st.error("Seu aporte é insuficiente para comprar a ação nesse ano")
 
             #pegar valor do aporte mensal
-            if aporte_mensal:
+            if aporte_mensal >= 0:
               aporte_mensal = round(aporte_mensal, 2)
               st.success("Aportes mensais aceitos!!!")
               if aporte_mensal == 0:
