@@ -124,8 +124,8 @@ if ticket:
               })
 
               df.reset_index(inplace=True)
-
-              st.line_chart(df["Close"])
+              fig = px.line(df, x="Date", y="Close", title="Preço da ação ao longo do tempo")
+              st.line_chart(fig)
 
 
 
