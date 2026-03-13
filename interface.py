@@ -13,7 +13,7 @@ st.markdown("""
             
 label, p, h1, h2, h3, h4 { color: #0E1117 !important; }
             
-button { background-color: #0E1117 !important; color: #0E1117 !important; }
+button { background-color: #0E1117 !important; color: white !important; }
             
 </style>
 """, unsafe_allow_html=True)
@@ -66,10 +66,11 @@ if not st.session_state.df.empty:
    st.success("Cálculo concluído!")
    st.write(f"Data inicial: {data}")
    st.write(f"Valor inicial: R$ {valor_inicial:,.2f}")
+   st.write(f"Aporte mensal: R$ {aporte_mensal:,.2f}")
   
 df = st.session_state.df.copy()
  
-df = df[df["Date"].year >= hj.year]
+df = df[df["Date"] >= hj]
 df["Date"] = pd.to_datetime(df['Date'])
 
 df_ano_mes = df.copy()
