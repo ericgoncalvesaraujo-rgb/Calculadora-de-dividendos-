@@ -53,7 +53,7 @@ if st.session_state.acoes:
 if not st.session_state.df.empty:
  with st.form("formulario"):
   hj = dt.datetime.now()
-  data = st.number_input("Digite a data inicial: ", min_value=1900, max_value=hj, step=1)
+  data = st.date_input("Digite a data inicial: ", max_value=hj.date())
   valor_inicial = st.number_input("Digite o valor inicial: ", min_value = 0.0, step= 100)
   aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0.0, step=10)
   botao_formulario = st.form_submit_button("Calcular")
