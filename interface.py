@@ -148,7 +148,7 @@ if st.session_state.calcular:
  df_final["Data"] = df_final["Data"].dt.to_timestamp()
 
  custos = valor_inicial + aporte_somado
- lucro_reinvestindo = round((df_final["Patrimoônio"].iloc[-1] - custos) / custos * 100,2)
+ lucro_reinvestindo = round((df_final["Patrimônio"].iloc[-1] - custos) / custos * 100,2)
  lucro_sem_reinvestir = round((df_final["Patrimônio sem reinvestir"].iloc[-1] - custos) / custos * 100,2)
  
  fig1 =  px.line(df_final, x=df_final["Data"], y=(["Patrimônio", "Patrimônio sem reinvestir"]), title="Evoloção reinvestindo ou não os dividendos")
