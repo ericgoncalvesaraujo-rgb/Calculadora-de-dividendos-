@@ -165,8 +165,8 @@ if st.session_state.calcular:
   st.plotly_chart(fig2, use_container_width=True)
   st.plotly_chart(fig3, use_container_width=True)
  
- st.write(f"Se não reinvestisse os dividendos, seu patrimonio final seria de R$: {df_final["Patrimônio sem reinvestir"].iloc[-1]:,.2f} com um lucro de {lucro_sem_reinvestir}\n\n")
- st.write(f"Reinvestindo os dividendos, seu patrimonio final seria de R$: {df_final["Patrimônio"].iloc[-1]:,.2f} com um lucro de {lucro_reinvestindo}")
+ st.write(f"Se não reinvestisse os dividendos, seu patrimônio final seria de R$: {df_final['Patrimônio sem reinvestir'].iloc[-1]:,.2f} com um lucro de {lucro_sem_reinvestir}\n")
+ st.write(f"Reinvestindo os dividendos, seu patrimônio final seria de R$: {df_final['Patrimônio'].iloc[-1]:,.2f} com um lucro de {lucro_reinvestindo}")
 
 
 
