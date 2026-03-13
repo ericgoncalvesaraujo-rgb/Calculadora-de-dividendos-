@@ -9,9 +9,12 @@ st.set_page_config(page_title="Calculadora de Dividendos")
 #markdown
 st.markdown("""
 <style>
-.stApp { background-color: #0E1117; color: white; }
-label, p, h1, h2, h3, h4 { color: white !important; }
-button { background-color: blue !important; color: white !important; }
+.stApp { background-color: white; color: #0E1117; }
+            
+label, p, h1, h2, h3, h4 { color: #0E1117 !important; }
+            
+button { background-color: blue !important; color: #0E1117 !important; }
+            
 </style>
 """, unsafe_allow_html=True)
 
@@ -58,10 +61,12 @@ if not st.session_state.df.empty:
   aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0.0, step=10)
   botao_formulario = st.form_submit_button("Calcular")
 
-if botao_formulario:
-  st.spinner("Calculando dividendos...")
-  st.success("Cálculo concluído!")
-
+  if botao_formulario:
+   st.spinner("Calculando dividendos...")
+   st.success("Cálculo concluído!")
+   st.write(f"Data inicial: {data}")
+   st.write(f"Valor inicial: R$ {valor_inicial:,.2f}")
+  
 df = st.session_state.df.copy()
  
 df = df[df["Date"].year >= hj.year]
