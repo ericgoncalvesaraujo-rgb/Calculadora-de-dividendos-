@@ -11,7 +11,7 @@ st.markdown("""
 <style>
 .stApp { background-color: white; color: #0E1117; }
             
-label, p, h1, h2, h3, h4 { color: #0E1117 !important; }
+label, p, h1, h2, h3, h4 { color: #0E1117; }
             
 button { background-color: #0E1117 !important; color: white !important; }
             
@@ -70,7 +70,7 @@ if not st.session_state.df.empty:
   
 df = st.session_state.df.copy()
 
- 
+df["Date"] = df["Date"].dt.tz_localize(None)
 df = df[df["Date"] >= hj]
 df["Date"] = pd.to_datetime(df['Date'])
 
