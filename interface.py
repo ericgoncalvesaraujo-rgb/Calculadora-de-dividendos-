@@ -92,10 +92,10 @@ if st.session_state.calcular:
  })
  df_ano_mes. reset_index(inplace=True)
 
- saldo = valor_inicial % df_ano_mes["Date"].iloc[0]
- saldo_sem_divi = valor_inicial % df_ano_mes["Date"].iloc[0]
+ saldo = valor_inicial % df_ano_mes["Close"].iloc[0]
+ saldo_sem_divi = valor_inicial % df_ano_mes["Close"].iloc[0]
 
- quanti_acao = valor_inicial // df_ano_mes["Date"].iloc[0]
+ quanti_acao = valor_inicial // df_ano_mes["Close"].iloc[0]
  
  aporte_somado = 0
 
