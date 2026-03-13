@@ -153,7 +153,6 @@ if st.session_state.calcular:
  
  fig1 =  px.line(df_final, x=df_final["Data"], y=(["Patrimônio", "Patrimônio sem reinvestir"]), title="Evoloção reinvestindo ou não os dividendos")
  fig2 = px.bar(df_final, x=df_final["Data"], y=(["Dividendos_recebidos", "Dividendos_recebidos_sem_reinvestir"]), title="Dividendos recebidos reinvestindo ou não os dividendos")
- fig3 = px.bar(df_final, x="Data", y=("Total de ações", "Total de ações sem reinvestir"), title="Total de ações reinvestindo ou não os dividendos")
  
  exp1 = st.expander("Tabela completa")
  exp1.dataframe(df_final)
