@@ -11,7 +11,7 @@ st.markdown("""
 <style>
 .stApp { background-color: white; color: #0E1117; }
             
-button { background-color: #0E1117 !important; color: white !important; }
+button { background-color: #0E1117; color: white !important; }
             
 label, p, h1, h2, h3, h4 { color: #0E1117; }
             
@@ -21,6 +21,9 @@ label, p, h1, h2, h3, h4 { color: #0E1117; }
 st.title("📊 Calculadora de Dividendos")
 
 #organizando
+
+aux1 = False # variavel para controlar o fluxo do código
+
 if "acoes" not in st.session_state:
     st.session_state.acoes = []
 
@@ -68,7 +71,8 @@ if not st.session_state.df.empty:
    st.write(f"Valor inicial: R$ {valor_inicial:,.2f}")
    st.write(f"Aporte mensal: R$ {aporte_mensal:,.2f}")
   
-if botao_formulario:
+   aux1 = True
+if aux1:
  df = st.session_state.df.copy()
 
  df["Date"] = df["Date"].dt.tz_localize(None)
