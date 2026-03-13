@@ -11,7 +11,7 @@ st.markdown("""
 <style>
 .stApp { background-color: white; color: #0E1117; }
             
-button { background-color: #grey !important; color: blue !important; }
+button { background-color: #grey !important; color: #0E1117  !important; }
             
 label, p, h1, h2, h3, h4 { color: #0E1117; }
             
@@ -79,7 +79,7 @@ if st.session_state.calcular:
  df = st.session_state.df.copy()
 
  df["Date"] = df["Date"].dt.tz_localize(None)
- df = df[df["Date"] >= pd.to.datetime(data)]
+ df = df[df["Date"] >= pd.to_datetime(data)]
  df["Date"] = pd.to_datetime(df['Date'])
 
  df_ano_mes = df.copy()
