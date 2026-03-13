@@ -105,32 +105,34 @@ if st.session_state.calcular:
  df_final = []  
 
  for row in df_ano_mes.itertuples():
+  dividendo_recebido = round(row.Dividends * quanti_acao, 2)
   saldo += (row.Dividends * quanti_acao ) + aporte_mensal
   acao_comprada = saldo // row.Close
   quanti_acao += acao_comprada
   saldo = saldo % row.Close
   patrimonio = quanti_acao * row.Close + saldo
-  dividendo_recebido = row.Dividends * quanti_acao
+  patrimonio = round(patrimonio, 2)
 
 
-
+  dividendos_recebidos_sem_divi = round(row.Dividends * quanti_acao_sem_divi, 2)
   saldo_sem_divi += aporte_mensal
   acao_comprada_sem_divi = saldo_sem_divi // row.Close
   quanti_acao_sem_divi += acao_comprada_sem_divi
   saldo_sem_divi = saldo_sem_divi % row.Close
   patrimonio_sem_divi = quanti_acao_sem_divi * row.Close + saldo_sem_divi
-  dividendos_recebidos_sem_divi = row.Dividends * quanti_acao_sem_divi
+  patrimonio_sem_divi = round(patrimonio_sem_divi, 2)
    
+  valor_close = round(row.Close, 2)
+  
   aporte_somado += aporte_mensal
   divi_somado += row.Dividends * quanti_acao
-  
-  
-  
+
   df_final.append({
+
     "Data" : row.Date,
     "Saldo" : saldo,
     "Saldo_sem_reinvestir" : saldo_sem_divi,
-    "Preço da ação" : row.Close,
+    "Preço da ação" : valor_close,
     "Ações_compradas" : acao_comprada,
     "Ações_compradas_sem_reinvestir" : acao_comprada_sem_divi,
     "Dividendos_recebidos" : dividendo_recebido,
@@ -139,17 +141,32 @@ if st.session_state.calcular:
     "Total de ações sem reinvestir" : quanti_acao_sem_divi,
     "Patrimônio" : patrimonio,
     "Patrimônio sem reinvestir" : patrimonio_sem_divi
-  })
+    })
+                                                 
  
  df_final = pd.DataFrame(df_final)
  df_final["Data"] = df_final["Data"].dt.to_timestamp()
- 
- fig  =  px.line(df_final, x=df_final["Data"], y=(["Patrimônio", "Patrimônio sem reinvestir"]), title="Evoloção reinvestindo ou não os dividendos")
- 
- st.dataframe(df_final)
- st.plotly_chart(fig, use_container_width=True)
- st.bar_chart(df_final[["Data", "Dividendos_recebidos", "Dividendos_recebidos_sem_reinvestir"]].set_index("Data"))
 
+ custos = valor_inicial + aporte_somado
+ lucro_reinvestindo = round((df_final["Patrimoônio"].iloc[-1] - custos) / custos * 100,2)
+ lucro_sem_reinvestir = round((df_final["Patrimônio sem reinvestir"].iloc[-1] - custos) / custos * 100,2)
+ 
+ fig1 =  px.line(df_final, x=df_final["Data"], y=(["Patrimônio", "Patrimônio sem reinvestir"]), title="Evoloção reinvestindo ou não os dividendos")
+ fig2 = px.bar(df_final, x=df_final["Data"], y=(["Dividendos_recebidos", "Dividendos_recebidos_sem_reinvestir"]), title="Dividendos recebidos reinvestindo ou não os dividendos")
+ fig3 = px.bar(df_final, x="Data", y=("Total de ações", "Total de ações sem reinvestir"), title="Total de ações reinvestindo ou não os dividendos")
+ 
+ exp1 = st.expander("Tabela completa")
+ exp1.dataframe(df_final)
+
+ exp2 = st.expander("Gráficos")
+ with exp2:
+  st.write("Evolução do patrimônio reinvestindo ou não os dividendos")
+  st.plotly_chart(fig1, use_container_width=True)
+  st.plotly_chart(fig2, use_container_width=True)
+  st.plotly_chart(fig3, use_container_width=True)
+ 
+ st.write(f"Se não reinvestisse os dividendos, seu patrimonio final seria de R$: {df_final["Patrimônio sem reinvestir"].iloc[-1]:,.2f} com um lucro de {lucro_sem_reinvestir}\n\n")
+ st.write(f"Reinvestindo os dividendos, seu patrimonio final seria de R$: {df_final["Patrimônio"].iloc[-1]:,.2f} com um lucro de {lucro_reinvestindo}")
 
 
 
