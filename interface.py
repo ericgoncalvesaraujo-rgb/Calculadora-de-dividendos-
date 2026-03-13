@@ -69,6 +69,7 @@ if not st.session_state.df.empty:
    st.write(f"Aporte mensal: R$ {aporte_mensal:,.2f}")
   
 df = st.session_state.df.copy()
+df.reset_index(inplace=True)
  
 df = df[df["Date"] >= hj]
 df["Date"] = pd.to_datetime(df['Date'])
