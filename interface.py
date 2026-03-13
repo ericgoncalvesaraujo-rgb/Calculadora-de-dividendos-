@@ -69,11 +69,11 @@ if not st.session_state.df.empty:
   
   #mostrar os resultados obtidos do formulario
   if botao_formulario:
-   st.spinner("Calculando dividendos...")
-   st.success("Cálculo concluído!")
-   st.write(f"Data inicial: {data}")
-   st.write(f"Valor inicial: R$ {valor_inicial:,.2f}")
-   st.write(f"Aporte mensal: R$ {aporte_mensal:,.2f}")
+   with st.spinner("Calculando dividendos..."):
+    st.success("Cálculo concluído!")
+    st.write(f"Data inicial: {data}")
+    st.write(f"Valor inicial: R$ {valor_inicial:,.2f}")
+    st.write(f"Aporte mensal: R$ {aporte_mensal:,.2f}")
   
    #variavel feita para controlar o fluxo do programa e evitar que ele rode antes de ter os dados necessários
    st.session_state.calcular = True
