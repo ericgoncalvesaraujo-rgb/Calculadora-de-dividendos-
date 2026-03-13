@@ -142,11 +142,11 @@ if st.session_state.calcular:
   })
  
  df_final = pd.DataFrame(df_final)
- 
+ df_final["Data"] = df_final["Data"].dt.to_timestamp()
  
  fig  =  px.line(df_final, x=df_final["Data"], y=(["Patrimônio", "Patrimônio sem reinvestir"]), title="Evoloção reinvestindo ou não os dividendos")
  
- 
+ st.dataframe(df_final)
  st.plotly_chart(fig, use_container_width=True)
  st.bar_chart(df_final[["Data", "Dividendos_recebidos", "Dividendos_recebidos_sem_reinvestir"]].set_index("Data"))
 
