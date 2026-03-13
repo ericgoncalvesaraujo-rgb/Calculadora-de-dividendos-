@@ -27,6 +27,9 @@ if "acoes" not in st.session_state:
 if "df" not in st.session_state:
     st.session_state.df = pd.DataFrame()
 
+if "df[Date]" not in st.session_state:
+    st.session_state.df["Date"] = pd.DataFrame()
+
 if "df_ano_mes" not in st.session_state:
   st.session_state.df_ano_mes = pd.DataFrame()
 
@@ -69,7 +72,7 @@ if not st.session_state.df.empty:
    st.write(f"Aporte mensal: R$ {aporte_mensal:,.2f}")
   
 df = st.session_state.df.copy()
-df.reset_index(inplace=True)
+
  
 df = df[df["Date"] >= hj]
 df["Date"] = pd.to_datetime(df['Date'])
