@@ -38,34 +38,34 @@ if ticket_input and ticket_input not in st.session_state.acoes:
 if st.session_state.acoes:
  escolha_acao = st.selectbox("Escolha a ação da sua lista:", st.session_state.acoes)
 
-if st.button("Buscar Dados"):
- with st.spinner("Buscando dados no Yahoo Finance..."):
-  acao = yf.Ticker(f"{escolha_acao}.SA")
-  df_temporario = acao.history(period="max")
-  if df_temporario.empty:
-    st.error("Não foi possível encontrar dados para a ação selecionada.")
-  else:
-    df_temporario.reset_index(inplace=True)
-    st.session_state.df = df_temporario
-    st.success("Dados carregados com sucesso!")
-  
+ if st.button("Buscar Dados"):
+  with st.spinner("Buscando dados no Yahoo Finance..."):
+    acao = yf.Ticker(f"{escolha_acao}.SA")
+    df_temporario = acao.history(period="max")
+    if df_temporario.empty:
+      st.error("Não foi possível encontrar dados para a ação selecionada.")
+    else:
+      df_temporario.reset_index(inplace=True)
+      st.session_state.df = df_temporario
+      st.success("Dados carregados com sucesso!")
+    
 #fazendo o formulario
 if not st.session_state.df.empty:
-  with st.form("formulario"):
-    hj = dt.datetime.now()
-    data = st.number_input("Digite a data inicial: ", min_value=1900, max_value=hj, step=1)
-    valor_inicial = st.number_input("Digite o valor inicial: ", min_value = 0.0, step= 100)
-    aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0.0, step=10)
-    botao_formulario = st.form_submit_button("Calcular")
+ with st.form("formulario"):
+  hj = dt.datetime.now()
+  data = st.number_input("Digite a data inicial: ", min_value=1900, max_value=hj, step=1)
+  valor_inicial = st.number_input("Digite o valor inicial: ", min_value = 0.0, step= 100)
+  aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0.0, step=10)
+  botao_formulario = st.form_submit_button("Calcular")
 
 if botao_formulario:
- st.spinner("Calculando dividendos...")
- st.success("Cálculo concluído!")
+  st.spinner("Calculando dividendos...")
+  st.success("Cálculo concluído!")
 
- df = st.session_state.df.copy()
-
- df = df[df["Date"].year >= hj.year]
- df["Date"] = pd.to_datetime(df['Date'])
+df = st.session_state.df.copy()
+ 
+df = df[df["Date"].year >= hj.year]
+df["Date"] = pd.to_datetime(df['Date'])
 
 df_ano_mes = df.copy()
 
