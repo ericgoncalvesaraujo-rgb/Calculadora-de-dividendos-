@@ -68,21 +68,22 @@ if not st.session_state.df.empty:
    st.write(f"Valor inicial: R$ {valor_inicial:,.2f}")
    st.write(f"Aporte mensal: R$ {aporte_mensal:,.2f}")
   
-df = st.session_state.df.copy()
+if botao_formulario:
+ df = st.session_state.df.copy()
 
-df["Date"] = df["Date"].dt.tz_localize(None)
-df = df[df["Date"] >= hj]
-df["Date"] = pd.to_datetime(df['Date'])
+ df["Date"] = df["Date"].dt.tz_localize(None)
+ df = df[df["Date"] >= hj]
+ df["Date"] = pd.to_datetime(df['Date'])
 
-df_ano_mes = df.copy()
+ df_ano_mes = df.copy()
 
-df_ano_mes["Date"] = pd.to_datetime(df_ano_mes["Date"]).dt.to_period("M")
+ df_ano_mes["Date"] = pd.to_datetime(df_ano_mes["Date"]).dt.to_period("M")
 
-df_ano_mes = df_ano_mes.groupby("Date").agg({
-  "Dividends" : "sum", "Close" : "last"
-})
+ df_ano_mes = df_ano_mes.groupby("Date").agg({
+    "Dividends" : "sum", "Close" : "last"
+ })
 
-if not df_ano_mes.empty:
+ 
  st.line_chart(df_ano_mes[["Dividends", "Close"]])
 
 
