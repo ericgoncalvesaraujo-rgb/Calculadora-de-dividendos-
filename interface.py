@@ -24,6 +24,10 @@ if "acoes" not in st.session_state:
 if "df" not in st.session_state:
     st.session_state.df = pd.DataFrame()
 
+if "df_ano_mes" not in st.session_state:
+  st.session_state.df_ano_mes = pd.DataFrame()
+
+
 #pedindo a ação
 ticket_input = st.text_input("Digite o código da ação (ex: PETR4):").upper().strip()
 
@@ -70,3 +74,10 @@ df_ano_mes["Date"] = pd.to_datetime(["Date"]).dt.to_period("M")
 df_ano_mes = df_ano_mes.groupby("Date").agg({
   "Dividends" : "sum", "Close" : "last"
 })
+
+if not df_ano_mes.empty:
+ st.line_chart(df_ano_mes[["Dividends", "Close"]])
+
+
+
+
