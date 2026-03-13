@@ -13,7 +13,7 @@ st.markdown("""
             
 label, p, h1, h2, h3, h4 { color: #0E1117 !important; }
             
-button { background-color: blue !important; color: #0E1117 !important; }
+button { background-color: #0E1117 !important; color: #0E1117 !important; }
             
 </style>
 """, unsafe_allow_html=True)
@@ -57,8 +57,8 @@ if not st.session_state.df.empty:
  with st.form("formulario"):
   hj = dt.datetime.now()
   data = st.date_input("Digite a data inicial: ", max_value=hj.date())
-  valor_inicial = st.number_input("Digite o valor inicial: ", min_value = 0.0, step= 100)
-  aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0.0, step=10)
+  valor_inicial = st.number_input("Digite o valor inicial: ", min_value = 0.00, step= 100.00)
+  aporte_mensal = st.number_input("Digite o valor do aporte mensal (caso não for usar coloque 0): ", min_value=0.00, step=10.00)
   botao_formulario = st.form_submit_button("Calcular")
 
   if botao_formulario:
