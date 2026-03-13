@@ -11,9 +11,9 @@ st.markdown("""
 <style>
 .stApp { background-color: white; color: #0E1117; }
             
-label, p, h1, h2, h3, h4 { color: #0E1117; }
-            
 button { background-color: #0E1117 !important; color: white !important; }
+            
+label, p, h1, h2, h3, h4 { color: #0E1117; }
             
 </style>
 """, unsafe_allow_html=True)
@@ -76,7 +76,7 @@ df["Date"] = pd.to_datetime(df['Date'])
 
 df_ano_mes = df.copy()
 
-df_ano_mes["Date"] = pd.to_datetime(["Date"]).dt.to_period("M")
+df_ano_mes["Date"] = pd.to_datetime(df_ano_mes["Date"]).dt.to_period("M")
 
 df_ano_mes = df_ano_mes.groupby("Date").agg({
   "Dividends" : "sum", "Close" : "last"
