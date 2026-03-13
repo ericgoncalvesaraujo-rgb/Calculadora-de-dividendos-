@@ -99,6 +99,7 @@ for linha in df_ano_mes.itertuples():
  patrimonio = round(quantidade * linha.Close, 2)
  patrimonio_sem_divi = round(quantidade_sem_divi * linha.Close, 2)
 
+ #adiconando os resultados para o df_final
  df_final.append({
    "Data" : linha.Date,
    "Saldo" : saldo,
@@ -133,6 +134,7 @@ porcentagem_reinvestindo = round(((valor_final - gastos)/ gastos) * 100, 2)
 print(f"seu patrimônio seria R$:{valor_final_sem_divi} se não tivesse reenvestido os dividendos com lucro de {porcentagem_sem_reinvestir}% e\nR$:{valor_final} seria seu patrimônio se tivesse reenvestido,\num lucro de {porcentagem_reinvestindo}%")
 print("Se tivesse investido vamos te mostrar a mudança\n\n")
 
+#mostrar a tabela e os gráficos da evolução patrimonial com e sem reinvestimento dos dividendos
 print("Essa é a tabela da sua evolução patrimonial\n")
 print(df_final, "\n\n")
 print("Aqui está o gráfico da sua evolução patrimônial investimento os dividendos\n")
