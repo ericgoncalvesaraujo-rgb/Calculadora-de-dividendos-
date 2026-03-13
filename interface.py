@@ -144,7 +144,7 @@ if st.session_state.calcular:
  df_final = pd.DataFrame(df_final)
  
  
- fig  =  px.line(df_ano_mes, x=df_final["Data"], y=(["Patrimônio", "Patrimônio sem reinvestir"]), title="Evoloção reinvestindo ou não os dividendos")
+ fig  =  px.line(df_final, x=df_final["Data"], y=(["Patrimônio", "Patrimônio sem reinvestir"]), title="Evoloção reinvestindo ou não os dividendos")
  
  
  st.plotly_chart(fig, use_container_width=True)
