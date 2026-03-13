@@ -96,7 +96,8 @@ if st.session_state.calcular:
  saldo_sem_divi = valor_inicial % df_ano_mes["Close"].iloc[0]
 
  quanti_acao = valor_inicial // df_ano_mes["Close"].iloc[0]
- 
+ quanti_acao_sem_divi = valor_inicial // df_ano_mes["Close"].iloc[0]
+
  aporte_somado = 0
 
  divi_somado = 0
