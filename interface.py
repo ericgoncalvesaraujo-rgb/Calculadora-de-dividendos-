@@ -91,7 +91,7 @@ if st.session_state.calcular:
  })
 
  
- st.line_chart(df_ano_mes[["Dividends", "Close"]])
+ st.plotly_chart(df_ano_mes[["Dividends", "Close"]])
 
 
 
