@@ -27,9 +27,6 @@ if "acoes" not in st.session_state:
 if "df" not in st.session_state:
     st.session_state.df = pd.DataFrame()
 
-if "df[Date]" not in st.session_state:
-    st.session_state.df["Date"] = pd.DataFrame()
-
 if "df_ano_mes" not in st.session_state:
   st.session_state.df_ano_mes = pd.DataFrame()
 
