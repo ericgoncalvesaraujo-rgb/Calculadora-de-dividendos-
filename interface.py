@@ -2,6 +2,7 @@ import yfinance as yf
 import datetime as dt
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 
 # Configurações da página
 st.set_page_config(page_title="Calculadora de Dividendos")
@@ -90,8 +91,10 @@ if st.session_state.calcular:
     "Dividends" : "sum", "Close" : "last"
  })
 
- 
- st.plotly_chart(df_ano_mes[["Dividends", "Close"]])
+ fig  =  px.line(df_ano_mes, x=df_ano_mes.index.astype(str), y=(["Dividends", "Close"]), title="Evoloção reinvestindo ou não os dividendos")
+
+
+ st.plotly_chart(fig, use_container_width=True)
 
 
 
