@@ -67,7 +67,6 @@ df_ano_mes = df_ano_mes.groupby("Date").agg({
  "Dividends" : "sum", "Close" : "last"
 })
 df_ano_mes.reset_index(inplace=True)
-dividendos_mes = df_ano_mes[df_ano_mes["Dividends"] > 0]
 
 #organizando algumas variaveis para saber a rentabilidade 
 
