@@ -140,6 +140,12 @@ Fluxo principal:
 
 ## Como Executar
 
+faça o upgrade do pip install
+
+``` bash
+python3 -m pip install --upgrade pip
+```
+
 Instale as dependências:
 
 ```bash
@@ -148,7 +154,7 @@ pip install pandas plotly yfinance streamlit streamlit_plotly_events
  Mande o comando após a instalação:
 
  ```bash
-python calculadora.py
+python3 -m streamlit run interface.py
 ```
 
 ## Motivos
