@@ -140,6 +140,12 @@ Fluxo principal:
 
 ## Como Executar
 
+faça o upgrade do pip install
+
+``` bash
+python3 -m pip install --upgrade pip
+```
+
 Instale as dependências:
 
 ```bash
