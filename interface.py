@@ -15,6 +15,7 @@ st.markdown("""
             
 button { background-color: #grey !important;color: #0E1117 !important; }
                        
+st.Button > button { background-color: #grey !important;color: #0E1117 !important; }
 label, p, h1, h2, h3, h4 { color: #0E1117; }
             
 </style>
