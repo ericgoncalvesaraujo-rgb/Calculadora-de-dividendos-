@@ -13,10 +13,10 @@ st.markdown("""
 <style>
 .stApp { background-color: white; color: #0E1117  ; }
             
-button { background-color: #grey !important;color: #0E1117 !important; }
+button { background-color: #grey !important;color: #0E1117; }
                       
             
-label, p, h1, h2, h3, h4 { color: #grey; }
+label, p, h1, h2, h3, h4 { color: #0E1117; }
             
 </style>
 """, unsafe_allow_html=True)
