@@ -11,9 +11,9 @@ st.set_page_config(page_title="Calculadora de Dividendos")
 #markdown
 st.markdown("""
 <style>
-.stApp { background-color: white; color: #0E1117; }
+.stApp { background-color: white; color: grey; }
             
-button { color: #0E1117  !important; }
+button { background-color: #0E1117 !important;color: white !important; }
             
 label, p, h1, h2, h3, h4 { color: #0E1117; }
             
