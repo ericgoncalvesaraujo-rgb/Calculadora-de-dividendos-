@@ -16,7 +16,7 @@ st.markdown("""
 button { background-color: #grey !important;color: #0E1117 !important; }
                       
             
-label, p, h1, h2, h3, h4 { color: white! important; }
+label, p, h1, h2, h3, h4 { color: white!; }
             
 </style>
 """, unsafe_allow_html=True)
