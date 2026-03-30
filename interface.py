@@ -13,9 +13,7 @@ st.markdown("""
 <style>
 .stApp { background-color: white; color: #0E1117; }
             
-button { background-color: #0E1117 !important;color: white !important; }
-            
-st.Button { background-color: #0E1117 !important;color: white !important; }
+button {color: white !important; }
                        
 label, p, h1, h2, h3, h4 { color: #0E1117; }
             
