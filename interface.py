@@ -12,11 +12,11 @@ st.set_page_config(page_title="Calculadora de Dividendos")
 st.markdown("""
 <style>
             
-button { background-color: #grey !important;color: #0E1117 !important; }
+button { background-color: grey !important;color: white !important; }
                         
-.stApp { background-color: white !important ; color: #0E1117  ; }          
+.stApp { background-color: white !important ; color: grey  ; }          
             
-label, p, h1, h2, h3, h4 { color: white!; }
+label, p, h1, h2, h3, h4 { color: white; }
             
 </style>
 """, unsafe_allow_html=True)
