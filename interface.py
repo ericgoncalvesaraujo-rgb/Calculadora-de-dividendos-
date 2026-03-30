@@ -16,7 +16,7 @@ button { background-color: #000000 !important;color: white !important; }
                         
 .stApp { background-color: white !important ; color: #000000  ; }          
             
-label, p, h1, h2, h3, h4 { color: #000000: ; }
+label, p, h1, h2, h3, h4 { color: grey: ; }
             
 </style>
 """, unsafe_allow_html=True)
